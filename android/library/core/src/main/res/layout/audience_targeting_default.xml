@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingView
+	style="@style/default_screenlet"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:liferay="http://schemas.android.com/apk/res-auto">
+
+	<com.liferay.mobile.screens.webcontentdisplay.WebContentDisplayScreenlet
+		android:id="@+id/audience_webcontent"
+		style="@style/default_screenlet"
+		liferay:autoLoad="false"
+		liferay:layout="@layout/webcontentdisplay_default"/>
+
+	<ImageView
+		android:id="@+id/audience_image"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+</com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingView>
