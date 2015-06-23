@@ -184,6 +184,13 @@
 				/>
 
 			<Button
+				android:id="@+id/audience_targeting"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="10dp"
+				android:text="@string/audience_targeting"/>
+
+			<Button
 				android:id="@+id/change_theme"
 				android:text="@string/change_theme"
 				style="@style/test_app_button"

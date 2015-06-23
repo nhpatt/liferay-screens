@@ -35,6 +35,7 @@ public class MainActivity extends ThemeActivity implements View.OnClickListener 
 		findViewById(R.id.journal_article_with_template).setOnClickListener(this);
 		findViewById(R.id.filtered_asset).setOnClickListener(this);
 		findViewById(R.id.login_full_screenlet).setOnClickListener(this);
+		findViewById(R.id.audience_targeting).setOnClickListener(this);
 		findViewById(R.id.change_theme).setOnClickListener(this);
 		findViewById(R.id.login).setOnClickListener(this);
 		findViewById(R.id.clear_cache).setOnClickListener(this);
@@ -95,6 +96,9 @@ public class MainActivity extends ThemeActivity implements View.OnClickListener 
 				break;
 			case R.id.login_full_screenlet:
 				start(LoginFullActivity.class);
+				break;
+			case R.id.audience_targeting:
+				DefaultAnimation.startActivityWithAnimation(this, getIntentWithTheme(AudienceTargetingActivity.class));
 				break;
 			case R.id.change_theme:
 				finish();
