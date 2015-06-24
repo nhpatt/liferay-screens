@@ -1,16 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  xmlns:liferay="http://schemas.android.com/apk/res-auto"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+			xmlns:liferay="http://schemas.android.com/apk/res-auto"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
 
-	<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
-		android:id="@+id/audience_targeting_screenlet"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		liferay:layoutId="@layout/audience_targeting_default"
-		liferay:placeholder="screenlet1"
-		liferay:screenletApp="screens1"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-</LinearLayout>
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/blogs_entry"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="blogs_entry"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/bookmarks_entry"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="bookmarks_entry"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/bookmarks_folder"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="bookmarks_folder"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/dl_file_entry"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="dl_file_entry"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/dl_folder"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="dl_folder"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/journal_article"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="journal_article"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/journal_folder"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="journal_folder"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/mb_message"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="mb_message"
+			liferay:screenletApp="screens1"/>
+
+		<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet
+			android:id="@+id/wiki_page"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			liferay:layoutId="@layout/audience_targeting_default"
+			liferay:placeholder="wiki_page"
+			liferay:screenletApp="screens1"/>
+	</LinearLayout>
+</ScrollView>

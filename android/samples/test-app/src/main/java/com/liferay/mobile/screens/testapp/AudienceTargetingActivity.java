@@ -1,53 +1,54 @@
 package com.liferay.mobile.screens.testapp;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
 import com.liferay.mobile.screens.audiencetargeting.AudienceTargetingListener;
 import com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet;
 import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadedEvent;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentEvent;
-import com.liferay.mobile.screens.context.LiferayServerContext;
-import com.liferay.mobile.screens.util.LiferayLogger;
 import com.liferay.mobile.screens.viewsets.defaultviews.LiferayCrouton;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * @author Javier Gamarra
  */
-public class AudienceTargetingActivity extends ThemeActivity implements AudienceTargetingListener {
+public class AudienceTargetingActivity extends ThemeActivity {
 
 	@Override
 	protected void onCreate(final Bundle state) {
 		super.onCreate(state);
 		setContentView(R.layout.audience_targeting);
 
-		_audienceTargetingScreenlet = (AudienceTargetingScreenlet) findViewById(R.id.audience_targeting_screenlet);
-		_audienceTargetingScreenlet.load();
-		_audienceTargetingScreenlet.setListener(this);
+		loadScreenlet(R.id.blogs_entry, "blogs_entry");
+		loadScreenlet(R.id.bookmarks_entry, "bookmarks_entry");
+		loadScreenlet(R.id.bookmarks_folder, "bookmarks_folder");
+		loadScreenlet(R.id.dl_file_entry, "dl_file_entry");
+		loadScreenlet(R.id.dl_folder, "dl_folder");
+		loadScreenlet(R.id.journal_folder, "journal_folder");
+		loadScreenlet(R.id.mb_message, "mb_message");
+		//		loadScreenlet(R.id.journal_article, "journal_article");
+		//		loadScreenlet(R.id.wiki_page, "wiki_page");
 	}
 
-	@Override
-	public void onFailure(final Exception exception) {
-		LiferayCrouton.error(this, "Error loading audience targeting content", exception);
+	private void loadScreenlet(final int id, String placeholder) {
+		final AudienceTargetingScreenlet screenlet = (AudienceTargetingScreenlet) findViewById(id);
+		screenlet.load(placeholder);
+		screenlet.setListener(new AudienceTargetingListener() {
+			@Override
+			public void onFailure(final Exception exception) {
+				LiferayCrouton.error(AudienceTargetingActivity.this, "Error loading audience targeting content", exception);
+			}
+
+			@Override
+			public void onSuccess(final AudienceTargetingLoadedEvent event) {
+				LiferayCrouton.info(AudienceTargetingActivity.this, "Audience targeting loaded successfully!");
+				screenlet.loadContent(event.getResults().get(0));
+			}
+
+			@Override
+			public void onSuccess(final AudienceTargetingContentEvent audienceTargetingContentEvent) {
+				LiferayCrouton.info(AudienceTargetingActivity.this, "Content loaded!");
+			}
+		});
 	}
 
-	@Override
-	public void onSuccess(final AudienceTargetingLoadedEvent event) {
-		LiferayCrouton.info(this, "Audience targeting loaded successfully!");
-		_audienceTargetingScreenlet.loadContent(event.getResults().get(0));
-	}
-
-	@Override
-	public void onSuccess(final AudienceTargetingContentEvent audienceTargetingContentEvent) {
-		LiferayCrouton.info(this, "Content loaded!");
-	}
-
-	private AudienceTargetingScreenlet _audienceTargetingScreenlet;
 }
