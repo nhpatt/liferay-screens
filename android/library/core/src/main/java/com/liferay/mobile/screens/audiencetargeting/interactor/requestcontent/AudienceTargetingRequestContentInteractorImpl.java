@@ -29,7 +29,8 @@ public class AudienceTargetingRequestContentInteractorImpl
 		session.setCallback(new JSONObjectCallback(getTargetScreenletId()));
 
 		try {
-			AudienceTargetingContentService service = AudienceTargetingServiceFactory.getContentServiceByClassName(result.getClassName());
+			AudienceTargetingContentService service = AudienceTargetingServiceFactory
+				.getContentServiceByClassName(result.getClassName());
 			if (service != null) {
 				service.retrieveBySessionAndClassPK(session, result.getClassPK());
 			}
