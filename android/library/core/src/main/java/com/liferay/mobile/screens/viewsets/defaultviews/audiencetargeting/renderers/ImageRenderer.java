@@ -2,10 +2,13 @@ package com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.rende
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.liferay.mobile.screens.R;
 import com.liferay.mobile.screens.context.LiferayScreensContext;
 import com.liferay.mobile.screens.context.LiferayServerContext;
+import com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingRenderer;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -15,11 +18,19 @@ import org.json.JSONObject;
 /**
  * @author Javier Gamarra
  */
-public class ImageRenderer {
+public class ImageRenderer extends AudienceTargetingRenderer {
 
-	public void render(ImageView imageView, JSONObject jsonObject) throws JSONException {
+	@Override
+	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
 		RequestCreator request = createRequest(LiferayServerContext.getServer(), LiferayScreensContext.getContext(), jsonObject, 300);
-		request.into(imageView);
+
+		request.into((ImageView) view.findViewById(R.id.audience_image));
+		return view;
+	}
+
+	@Override
+	protected int getLayout() {
+		return R.layout.audience_targeting_image_view_default;
 	}
 
 	public RequestCreator createRequest(String server, Context context, JSONObject result, int targetWidth)
