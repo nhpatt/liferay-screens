@@ -10,9 +10,9 @@ import com.liferay.mobile.screens.base.interactor.Interactor;
  */
 public interface AudienceTargetingLoadScreenletsInteractor extends AudienceTargetingInteractor {
 
-	void getScreenlets(String screenletApp, Integer groupId, UserContext userContext) throws Exception;
+	void getScreenlets(String screenletApp, Long groupId, UserContext userContext) throws Exception;
 
-	void getScreenlets(String screenletApp, Integer groupId, String placeholder, UserContext userContext)
+	void getScreenlets(String screenletApp, Long groupId, String placeholder, UserContext userContext)
 		throws Exception;
 
 }

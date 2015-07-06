@@ -35,6 +35,10 @@ public class AudienceTargetingResult {
 		}
 	}
 
+	public boolean isCustomContent() {
+		return "".equals(_className);
+	}
+
 	public Integer getCampaignId() {
 		return _campaignId;
 	}

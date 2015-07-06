@@ -31,16 +31,15 @@ public class AudienceTargetingView extends LinearLayout implements AudienceTarge
 	public void showAudienceContent(final AudienceTargetingContentRequestedEvent event) {
 		try {
 			AudienceTargetingRenderer renderer = new AudienceTargetingRendererFactory()
-				.getRenderer(event.getJSONObject());
+					.getRenderer(event.getClassName(), event.getContent());
 			if (renderer != null) {
-				View render = renderer.render(event.getJSONObject());
-				if (render != null) {
-					addView(render);
+				View view = renderer.render(event.getContent(), getContext());
+				if (view != null) {
+					addView(view);
 				}
 			}
-		}
-		catch (Exception e) {
-			LiferayLogger.e("Error loading document", e);
+		} catch (Exception e) {
+			LiferayLogger.e("Error displaying audience targeting content", e);
 		}
 	}
 
@@ -59,12 +58,6 @@ public class AudienceTargetingView extends LinearLayout implements AudienceTarge
 		String message = "Could not retrieve audience targeting content";
 		LiferayLogger.e(message, e);
 		LiferayCrouton.error(getContext(), message, e);
-	}
-
-	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
-
 	}
 
 }

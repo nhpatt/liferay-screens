@@ -108,11 +108,11 @@ public class AudienceTargetingScreenlet
 		_placeholder = placeholder;
 	}
 
-	public Integer getGroupId() {
+	public Long getGroupId() {
 		return _groupId;
 	}
 
-	public void setGroupId(final Integer groupId) {
+	public void setGroupId(final Long groupId) {
 		_groupId = groupId;
 	}
 
@@ -120,14 +120,14 @@ public class AudienceTargetingScreenlet
 	protected View createScreenletView(Context context, AttributeSet attributes) {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributes, R.styleable.AudienceTargetingScreenlet, 0, 0);
 
-		int layoutId = typedArray.getResourceId(R.styleable.AudienceTargetingScreenlet_layoutId, 0);
+		int layoutId = typedArray.getResourceId(R.styleable.AudienceTargetingScreenlet_layoutId, getDefaultLayoutId());
 
 		_appName = typedArray.getString(R.styleable.AudienceTargetingScreenlet_screenletApp);
 		if (_appName == null) {
 			_appName = getResources().getString(R.string.app_name);
 		}
 
-		_groupId = typedArray.getInt(R.styleable.AudienceTargetingScreenlet_groupId, (int) LiferayServerContext.getGroupId());
+		_groupId = (long) typedArray.getInt(R.styleable.AudienceTargetingScreenlet_groupId, (int) LiferayServerContext.getGroupId());
 		_placeholder = typedArray.getString(R.styleable.AudienceTargetingScreenlet_placeholder);
 
 		View view = LayoutInflater.from(context).inflate(layoutId, null);
@@ -191,6 +191,5 @@ public class AudienceTargetingScreenlet
 	private AudienceTargetingListener _listener;
 	private String _appName;
 	private String _placeholder;
-	private Integer _groupId;
 
 }

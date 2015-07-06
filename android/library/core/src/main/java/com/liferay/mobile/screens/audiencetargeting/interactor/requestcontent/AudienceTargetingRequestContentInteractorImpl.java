@@ -1,14 +1,11 @@
 package com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent;
 
-import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.screens.audiencetargeting.AudienceTargetingListener;
 import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.services.AudienceTargetingContentService;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.services.AudienceTargetingServiceFactory;
 import com.liferay.mobile.screens.base.interactor.BaseRemoteInteractor;
-import com.liferay.mobile.screens.base.interactor.JSONObjectCallback;
-import com.liferay.mobile.screens.base.interactor.JSONObjectEvent;
-import com.liferay.mobile.screens.context.SessionContext;
+import com.liferay.mobile.screens.base.interactor.BasicEvent;
 import com.liferay.mobile.screens.util.LiferayLogger;
 
 /**
@@ -47,10 +44,20 @@ public class AudienceTargetingRequestContentInteractorImpl
 			getListener().onFailure(event.getException());
 		}
 		else {
-			AudienceTargetingContentEvent audienceTargetingContentEvent
-				= new AudienceTargetingContentEvent(getTargetScreenletId(), event.getJSONObject());
-			getListener().onSuccess(audienceTargetingContentEvent);
+			getListener().onSuccess(event);
 		}
+	}
+
+	protected boolean isValidEvent(AudienceTargetingContentRequestedEvent event) {
+		if (getListener() == null) {
+			return false;
+		}
+
+		if (event.getTargetScreenletId() != getTargetScreenletId()) {
+			return false;
+		}
+
+		return true;
 	}
 
 }
