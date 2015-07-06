@@ -90,6 +90,7 @@ public class IssuesActivity extends CardActivity
 
 		AudienceTargetingHelper.checkIfOldToShowMessages(sendMessages);
 		AudienceTargetingHelper.checkIfDeveloperCanShowResources(demoResources);
+		AudienceTargetingHelper.checkIfMarketingAndShowNewForm(this);
 	}
 
 	@Override
