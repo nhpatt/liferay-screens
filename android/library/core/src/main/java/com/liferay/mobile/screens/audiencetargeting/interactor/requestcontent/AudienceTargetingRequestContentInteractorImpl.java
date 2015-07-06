@@ -25,14 +25,11 @@ public class AudienceTargetingRequestContentInteractorImpl
 	public void getContent(AudienceTargetingResult result)
 		throws Exception {
 
-		Session session = SessionContext.createSessionFromCurrentSession();
-		session.setCallback(new JSONObjectCallback(getTargetScreenletId()));
-
 		try {
 			AudienceTargetingContentService service = AudienceTargetingServiceFactory
 				.getContentServiceByClassName(result.getClassName());
 			if (service != null) {
-				service.retrieveBySessionAndClassPK(session, result.getClassPK());
+				service.retrieveBySessionAndClassPK(result.getClassPK(), result.getClassName(), getTargetScreenletId());
 			}
 		}
 		catch (Exception e) {

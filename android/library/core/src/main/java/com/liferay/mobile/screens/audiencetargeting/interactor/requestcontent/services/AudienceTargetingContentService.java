@@ -7,5 +7,5 @@ import com.liferay.mobile.android.service.Session;
  */
 public abstract class AudienceTargetingContentService {
 
-	public abstract void retrieveBySessionAndClassPK(final Session session, Integer classPK) throws Exception;
+	public abstract void retrieveBySessionAndClassPK(Integer classPK, String className, Integer screenletId) throws Exception;
 }

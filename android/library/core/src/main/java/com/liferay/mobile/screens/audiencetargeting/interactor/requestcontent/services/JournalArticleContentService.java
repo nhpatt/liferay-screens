@@ -1,16 +1,25 @@
 package com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.services;
 
 import com.liferay.mobile.android.service.Session;
-import com.liferay.mobile.android.v62.journalarticle.JournalArticleService;
+import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingStringRequestedCallback;
+import com.liferay.mobile.screens.context.LiferayScreensContext;
+import com.liferay.mobile.screens.context.LiferayServerContext;
+import com.liferay.mobile.screens.context.SessionContext;
+import com.liferay.mobile.screens.service.v62.ScreensjournalarticleService;
+
+import java.util.Locale;
 
 /**
  * @author Javier Gamarra
  */
 public class JournalArticleContentService extends AudienceTargetingContentService {
 	@Override
-	public void retrieveBySessionAndClassPK(final Session session, final Integer classPK) throws Exception {
-		JournalArticleService journalArticleService = new JournalArticleService(session);
-		//FIXME
-//		journalArticleService.getArticle()
+	public void retrieveBySessionAndClassPK(final Integer classPK, String className, Integer screenletId) throws Exception {
+		Session session = SessionContext.createSessionFromCurrentSession();
+		session.setCallback(new AudienceTargetingStringRequestedCallback(screenletId, className));
+		ScreensjournalarticleService journalArticleService = new ScreensjournalarticleService(session);
+
+		Locale locale = LiferayScreensContext.getContext().getResources().getConfiguration().locale;
+		journalArticleService.getJournalArticle((int) LiferayServerContext.getGroupId(), classPK, locale.toString());
 	}
 }
