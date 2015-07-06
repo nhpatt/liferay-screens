@@ -3,12 +3,12 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.liferay.mobile.screens.bankofwesteros">
 
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.CAMERA"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.CALL_PHONE"/>
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-	<uses-permission android:name="com.liferay.mobile.screens.bankofwesteros.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.liferay.mobile.screens.bankofwesteros.permission.C2D_MESSAGE" />
 
 	<application
 		android:allowBackup="true"
@@ -43,6 +43,14 @@
 			</intent-filter>
 		</receiver>
 
-	</application>
+        <activity
+            android:name=".audience.NewPollActivity"
+         >
+        </activity>
+        <activity
+            android:name=".audience.ShowMoreInfoActivity"
+            >
+        </activity>
+    </application>
 
 </manifest>

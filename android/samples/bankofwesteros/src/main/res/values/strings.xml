@@ -51,6 +51,7 @@
 	<string name="call_menu_entry">Call (Monday &#8211; Friday, 06:00 &#8211; 22:00)</string>
 	<string name="default_telephone_uri">tel:900000000</string>
 	<string name="default_sms_uri">sms:900000000</string>
+<<<<<<< 1463a047360890fa788886b4492ed99821dcaa23
 	<string name="created">Created %s</string>
 	<string name="tour_image">Tour Image</string>
 	<string name="window">Window</string>
@@ -61,5 +62,11 @@
 	<string name="down_arrow">down arrow</string>
 	<string name="two_parallel_lines">two parallel lines</string>
 	<string name="left_arrow">left arrow</string>
+	<string name="show_demo_resources">Show demo resources</string>
+	<string name="title_activity_show_demo_resources">ShowDemoResources</string>
+
+	<string name="hello_world">Hello world!</string>
+	<string name="action_settings">Settings</string>
+	<string name="show_more_info">Show more info</string>
 
 </resources>

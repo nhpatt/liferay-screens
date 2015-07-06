@@ -74,7 +74,13 @@ public class MainActivity extends CardActivity
 
 	@Override
 	public void onLoginSuccess(User user) {
-		toIssues();
+		AudienceTargetingHelper.changeThemeOfIssuesListIfSales(new AudienceListener() {
+			@Override
+			public void onSuccess(String result) {
+				boolean isSales = Boolean.valueOf(result);
+				toIssues(isSales ? R.style.SalesTheme : R.style.WesterosTheme);
+			}
+		});
 	}
 
 	@Override
