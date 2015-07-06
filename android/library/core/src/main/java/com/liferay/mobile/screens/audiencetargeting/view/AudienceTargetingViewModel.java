@@ -9,4 +9,6 @@ import com.liferay.mobile.screens.base.view.BaseViewModel;
 public interface AudienceTargetingViewModel extends BaseViewModel {
 
 	void showAudienceContent(AudienceTargetingContentRequestedEvent event);
+
+	void showPlaceholder();
 }

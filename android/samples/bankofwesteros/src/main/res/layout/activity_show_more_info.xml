@@ -9,6 +9,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		liferay:autoLoad="true"
+		liferay:defaultLayout="@layout/content_default"
 		liferay:placeholder="if_developer_show_message_board"/>
 
 	<com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet

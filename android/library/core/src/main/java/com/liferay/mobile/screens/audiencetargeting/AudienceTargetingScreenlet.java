@@ -53,8 +53,11 @@ public class AudienceTargetingScreenlet
 
 		if (_loadContentAfterLoad) {
 			_loadContentAfterLoad = false;
+
 			if (!results.isEmpty()) {
 				loadContent(results.get(0));
+			} else {
+				getViewModel().showPlaceholder();
 			}
 		}
 	}
@@ -142,6 +145,14 @@ public class AudienceTargetingScreenlet
 		_groupId = groupId;
 	}
 
+	public int getDefaultLayout() {
+		return _defaultLayout;
+	}
+
+	public void setDefaultLayout(final int defaultLayout) {
+		_defaultLayout = defaultLayout;
+	}
+
 	@Override
 	protected View createScreenletView(Context context, AttributeSet attributes) {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributes, R.styleable.AudienceTargetingScreenlet, 0, 0);
@@ -149,13 +160,13 @@ public class AudienceTargetingScreenlet
 		int layoutId = typedArray.getResourceId(R.styleable.AudienceTargetingScreenlet_layoutId, getDefaultLayoutId());
 
 		_autoLoad = typedArray.getBoolean(R.styleable.AudienceTargetingScreenlet_autoLoad, false);
-		_appName = typedArray.getString(R.styleable.AudienceTargetingScreenlet_screenletApp);
-		if (_appName == null) {
-			_appName = getResources().getString(R.string.app_name);
-		}
+
+		String screenletApp = typedArray.getString(R.styleable.AudienceTargetingScreenlet_screenletApp);
+		_appName = screenletApp == null ? getResources().getString(R.string.app_name) : screenletApp;
 
 		_groupId = (long) typedArray.getInt(R.styleable.AudienceTargetingScreenlet_groupId, (int) LiferayServerContext.getGroupId());
 		_placeholder = typedArray.getString(R.styleable.AudienceTargetingScreenlet_placeholder);
+		_defaultLayout = typedArray.getResourceId(R.styleable.AudienceTargetingScreenlet_defaultLayout, 0);
 
 		View view = LayoutInflater.from(context).inflate(layoutId, null);
 
@@ -258,5 +269,5 @@ public class AudienceTargetingScreenlet
 	private String _appName;
 	private String _placeholder;
 	private Long _groupId;
-
+	private int _defaultLayout;
 }

@@ -67,5 +67,6 @@
 	<string name="hello_world">Hello world!</string>
 	<string name="action_settings">Settings</string>
 	<string name="show_more_info">Show more info</string>
+	<string name="sorry_we_couldnt_find_anything">Sorry we couldn\'t find anything</string>
 
 </resources>
