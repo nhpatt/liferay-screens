@@ -1,5 +1,6 @@
 package com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.renderers;
 
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class BlogRenderer extends AudienceTargetingRenderer {
 		title.setText(jsonObject.getString("title"));
 
 		TextView content = (TextView) view.findViewById(R.id.audience_blog_content);
-		content.setText(jsonObject.getString("content"));
+		content.setText(Html.fromHtml(jsonObject.getString("content")));
 
 		return view;
 	}

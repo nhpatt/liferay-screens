@@ -1,5 +1,6 @@
 package com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.renderers;
 
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,12 +18,11 @@ public class MBMessageRenderer extends AudienceTargetingRenderer {
 	protected View fillView(final View view, final Object object) throws JSONException {
 		JSONObject jsonObject = (JSONObject) object;
 
-		TextView title = (TextView) view.findViewById(R.id.audience_mb_body);
-		title.setText(jsonObject.getString("body"));
+		TextView body = (TextView) view.findViewById(R.id.audience_mb_body);
+		body.setText(Html.fromHtml(jsonObject.getString("body")));
 
-		TextView content = (TextView) view.findViewById(R.id.audience_mb_username);
-		content.setText(jsonObject.getString("userName"));
-
+		TextView username = (TextView) view.findViewById(R.id.audience_mb_username);
+		username.setText(Html.fromHtml(jsonObject.getString("userName")));
 
 		return view;
 	}

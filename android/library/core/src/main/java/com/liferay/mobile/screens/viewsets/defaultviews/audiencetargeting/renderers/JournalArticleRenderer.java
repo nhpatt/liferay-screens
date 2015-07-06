@@ -17,10 +17,8 @@ public class JournalArticleRenderer extends AudienceTargetingRenderer {
 	protected View fillView(final View view, final Object object) throws JSONException {
 		String html = (String) object;
 
-		//FIXME not working
 		WebContentDisplayScreenlet webContent = (WebContentDisplayScreenlet) view.findViewById(R.id.audience_webcontent);
-		webContent.setArticleId(jsonObject.getString("articleId"));
-		webContent.load();
+		webContent.onWebContentReceived(webContent, html);
 
 		return view;
 	}
