@@ -1,6 +1,5 @@
-package com.liferay.mobile.screens.audiencetargeting.interactor;
+package com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets;
 
-import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadedEvent;
 import com.liferay.mobile.screens.base.interactor.BasicEvent;
 import com.liferay.mobile.screens.base.interactor.InteractorAsyncTaskCallback;
 
@@ -9,10 +8,10 @@ import org.json.JSONArray;
 /**
  * @author Javier Gamarra
  */
-public class AudienceTargetingCallback
+public class AudienceTargetingLoadScreenletsCallback
 	extends InteractorAsyncTaskCallback<JSONArray> {
 
-	public AudienceTargetingCallback(int targetScreenletId) {
+	public AudienceTargetingLoadScreenletsCallback(int targetScreenletId) {
 		super(targetScreenletId);
 	}
 
@@ -23,12 +22,12 @@ public class AudienceTargetingCallback
 
 	@Override
 	protected BasicEvent createEvent(final int targetScreenletId, final JSONArray result) {
-		return new AudienceTargetingLoadedEvent(targetScreenletId, result);
+		return new AudienceTargetingScreenletsLoadedEvent(targetScreenletId, result);
 	}
 
 	@Override
 	protected BasicEvent createEvent(int targetScreenletId, Exception e) {
-		return new AudienceTargetingLoadedEvent(targetScreenletId, e);
+		return new AudienceTargetingScreenletsLoadedEvent(targetScreenletId, e);
 	}
 
 }
