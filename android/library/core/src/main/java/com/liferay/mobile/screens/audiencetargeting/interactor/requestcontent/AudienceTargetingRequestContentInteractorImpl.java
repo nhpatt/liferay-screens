@@ -41,7 +41,7 @@ public class AudienceTargetingRequestContentInteractorImpl
 		}
 	}
 
-	public void onEvent(JSONObjectEvent event) {
+	public void onEvent(AudienceTargetingContentRequestedEvent event) {
 		if (!isValidEvent(event)) {
 			return;
 		}

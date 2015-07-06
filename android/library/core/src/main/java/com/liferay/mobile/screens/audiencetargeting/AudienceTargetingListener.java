@@ -1,7 +1,7 @@
 package com.liferay.mobile.screens.audiencetargeting;
 
-import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadedEvent;
-import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingScreenletsLoadedEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentRequestedEvent;
 
 /**
  * @author Javier Gamarra
@@ -9,7 +9,7 @@ import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.Au
 public interface AudienceTargetingListener {
 	void onFailure(Exception exception);
 
-	void onSuccess(AudienceTargetingLoadedEvent event);
+	void onSuccess(AudienceTargetingScreenletsLoadedEvent event);
 
-	void onSuccess(AudienceTargetingContentEvent audienceTargetingContentEvent);
+	void onSuccess(AudienceTargetingContentRequestedEvent event);
 }

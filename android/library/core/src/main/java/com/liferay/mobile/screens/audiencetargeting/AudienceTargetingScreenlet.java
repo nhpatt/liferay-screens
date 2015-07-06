@@ -11,8 +11,8 @@ import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargeting
 import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadScreenletsInteractor;
 import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadScreenletsInteractorImpl;
-import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadedEvent;
-import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingScreenletsLoadedEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentRequestedEvent;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingRequestContentInteractor;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingRequestContentInteractorImpl;
 import com.liferay.mobile.screens.audiencetargeting.view.AudienceTargetingViewModel;
@@ -24,8 +24,8 @@ import com.liferay.mobile.screens.context.SessionContext;
  * @author Javier Gamarra
  */
 public class AudienceTargetingScreenlet
-	extends BaseScreenlet<AudienceTargetingViewModel, AudienceTargetingInteractor>
-	implements AudienceTargetingListener {
+		extends BaseScreenlet<AudienceTargetingViewModel, AudienceTargetingInteractor>
+		implements AudienceTargetingListener {
 
 	public AudienceTargetingScreenlet(Context context) {
 		super(context);
@@ -39,9 +39,7 @@ public class AudienceTargetingScreenlet
 		super(context, attributes, defaultStyle);
 	}
 
-	public void onSuccess(AudienceTargetingLoadedEvent event) {
-
-		AudienceTargetingManager.storeAudienceResults(event.getResults());
+	public void onSuccess(AudienceTargetingScreenletsLoadedEvent event) {
 
 		if (_listener != null) {
 			_listener.onSuccess(event);
@@ -49,11 +47,20 @@ public class AudienceTargetingScreenlet
 	}
 
 	@Override
-	public void onSuccess(final AudienceTargetingContentEvent event) {
+	public void onSuccess(final AudienceTargetingContentRequestedEvent event) {
 		getViewModel().showAudienceContent(event);
 
 		if (_listener != null) {
 			_listener.onSuccess(event);
+		}
+
+		_loadContentAfterLoad = false;
+	}
+
+	@Override
+	protected void onScreenletAttached() {
+		if (_autoLoad) {
+			loadAndLoadContent();
 		}
 	}
 

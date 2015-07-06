@@ -1,6 +1,6 @@
 package com.liferay.mobile.screens.audiencetargeting.view;
 
-import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentRequestedEvent;
 import com.liferay.mobile.screens.base.view.BaseViewModel;
 
 /**
@@ -8,5 +8,5 @@ import com.liferay.mobile.screens.base.view.BaseViewModel;
  */
 public interface AudienceTargetingViewModel extends BaseViewModel {
 
-	void showAudienceContent(AudienceTargetingContentEvent event);
+	void showAudienceContent(AudienceTargetingContentRequestedEvent event);
 }

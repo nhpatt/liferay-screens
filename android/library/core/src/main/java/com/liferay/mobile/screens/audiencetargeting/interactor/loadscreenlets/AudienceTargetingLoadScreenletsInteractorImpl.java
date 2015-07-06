@@ -42,7 +42,7 @@ public class AudienceTargetingLoadScreenletsInteractorImpl
 		service.getContent(screenletApp, groupId, placeholder, jsonObject, null);
 	}
 
-	public void onEvent(AudienceTargetingLoadedEvent event) {
+	public void onEvent(AudienceTargetingScreenletsLoadedEvent event) {
 		if (!isValidEvent(event)) {
 			return;
 		}
@@ -57,7 +57,7 @@ public class AudienceTargetingLoadScreenletsInteractorImpl
 
 	private ScreensAudienceTargetingService getAudienceTargetingService() {
 		Session session = SessionContext.createSessionFromCurrentSession();
-		session.setCallback(new AudienceTargetingCallback(getTargetScreenletId()));
+		session.setCallback(new AudienceTargetingLoadScreenletsCallback(getTargetScreenletId()));
 		return new ScreensAudienceTargetingService(session);
 	}
 
