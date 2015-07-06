@@ -14,7 +14,8 @@ import org.json.JSONObject;
  */
 public class MBMessageRenderer extends AudienceTargetingRenderer {
 	@Override
-	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
+	protected View fillView(final View view, final Object object) throws JSONException {
+		JSONObject jsonObject = (JSONObject) object;
 
 		TextView title = (TextView) view.findViewById(R.id.audience_mb_body);
 		title.setText(jsonObject.getString("body"));

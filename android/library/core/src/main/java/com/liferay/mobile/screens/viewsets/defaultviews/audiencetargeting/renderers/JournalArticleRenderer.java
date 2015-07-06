@@ -7,7 +7,6 @@ import com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.Audien
 import com.liferay.mobile.screens.webcontentdisplay.WebContentDisplayScreenlet;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * @author Javier Gamarra
@@ -15,7 +14,8 @@ import org.json.JSONObject;
 public class JournalArticleRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
+	protected View fillView(final View view, final Object object) throws JSONException {
+		String html = (String) object;
 
 		//FIXME not working
 		WebContentDisplayScreenlet webContent = (WebContentDisplayScreenlet) view.findViewById(R.id.audience_webcontent);

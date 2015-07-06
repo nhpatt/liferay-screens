@@ -21,8 +21,9 @@ import org.json.JSONObject;
 public class ImageRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
-		RequestCreator request = createRequest(LiferayServerContext.getServer(), LiferayScreensContext.getContext(), jsonObject, 300);
+	protected View fillView(final View view, final Object object) throws JSONException {
+		JSONObject jsonObject = (JSONObject) object;
+		RequestCreator request = createRequest(LiferayServerContext.getServer(), LiferayScreensContext.getContext(), jsonObject, null);
 
 		request.into((ImageView) view.findViewById(R.id.audience_image));
 		return view;
@@ -33,7 +34,7 @@ public class ImageRenderer extends AudienceTargetingRenderer {
 		return R.layout.audience_targeting_image_view_default;
 	}
 
-	public RequestCreator createRequest(String server, Context context, JSONObject result, int targetWidth)
+	public RequestCreator createRequest(String server, Context context, JSONObject result, Integer targetWidth)
 		throws JSONException {
 
 		String url = constructUrl(result, server);
@@ -50,8 +51,12 @@ public class ImageRenderer extends AudienceTargetingRenderer {
 		return server + "/documents/" + groupId + "/" + folderId + "/" + name + "/" + uuid;
 	}
 
-	private RequestCreator createPicassoRequest(Context context, int targetWidth, String url) {
-		return Picasso.with(context).load(url).resize(targetWidth, targetWidth);
+	private RequestCreator createPicassoRequest(Context context, Integer targetWidth, String url) {
+		RequestCreator load = Picasso.with(context).load(url);
+		if (targetWidth != null) {
+			return load.resize(targetWidth, targetWidth);
+		}
+		return load;
 	}
 
 }

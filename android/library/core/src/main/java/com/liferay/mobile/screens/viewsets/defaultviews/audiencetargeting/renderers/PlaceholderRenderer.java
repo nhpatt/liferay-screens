@@ -14,7 +14,8 @@ import org.json.JSONObject;
 public class PlaceholderRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
+	protected View fillView(final View view, final Object object) throws JSONException {
+
 		return view;
 	}
 

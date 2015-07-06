@@ -15,7 +15,8 @@ import org.json.JSONObject;
 public class BlogRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
+	protected View fillView(final View view, final Object object) throws JSONException {
+		JSONObject jsonObject = (JSONObject) object;
 
 		TextView title = (TextView) view.findViewById(R.id.audience_blog_title);
 		title.setText(jsonObject.getString("title"));

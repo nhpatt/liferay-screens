@@ -15,7 +15,7 @@ import org.json.JSONObject;
  */
 public abstract class AudienceTargetingRenderer {
 
-	public View render(final JSONObject jsonObject) {
+	public View render(final Object jsonObject, Context context) {
 		try {
 			LayoutInflater layoutInflater = (LayoutInflater) LiferayScreensContext.getContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -28,7 +28,7 @@ public abstract class AudienceTargetingRenderer {
 		return null;
 	}
 
-	protected abstract View fillView(final View view, final JSONObject jsonObject) throws JSONException;
+	protected abstract View fillView(final View view, final Object jsonObject) throws JSONException;
 
 	protected abstract int getLayout();
 

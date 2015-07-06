@@ -15,7 +15,8 @@ import org.json.JSONObject;
 public class FolderRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	protected View fillView(final View view, final JSONObject jsonObject) throws JSONException {
+	protected View fillView(final View view, final Object object) throws JSONException {
+		JSONObject jsonObject = (JSONObject) object;
 		TextView folderName = (TextView) view.findViewById(R.id.audience_folder_name);
 		folderName.setText(jsonObject.getString("name"));
 		return view;
