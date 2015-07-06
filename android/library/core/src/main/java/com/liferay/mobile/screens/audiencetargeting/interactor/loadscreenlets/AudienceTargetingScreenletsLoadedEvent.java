@@ -14,13 +14,13 @@ import java.util.List;
 /**
  * @author Javier Gamarra
  */
-public class AudienceTargetingLoadedEvent extends JSONArrayEvent {
+public class AudienceTargetingScreenletsLoadedEvent extends JSONArrayEvent {
 
-	public AudienceTargetingLoadedEvent(final int targetScreenletId, final Exception e) {
+	public AudienceTargetingScreenletsLoadedEvent(final int targetScreenletId, final Exception e) {
 		super(targetScreenletId, e);
 	}
 
-	public AudienceTargetingLoadedEvent(final int targetScreenletId, final JSONArray jsonArray) {
+	public AudienceTargetingScreenletsLoadedEvent(final int targetScreenletId, final JSONArray jsonArray) {
 		super(targetScreenletId, jsonArray);
 
 		parseResponse(jsonArray);
