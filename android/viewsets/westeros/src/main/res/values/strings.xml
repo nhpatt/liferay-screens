@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< 39639639554526af7b45eae1f9e5208919bfe725
 	<string name="replace_image">replace image</string>
 	<string name="see_password">See password</string>
 	<string name="last_name_cant_be_empty">Last name can not be empty</string>
 	<string name="email_address_cant_be_empty">Email address can not be empty</string>
 	<string name="password_cant_be_empty">Password can not be empty</string>
+=======
+	<string name="save_poll">Save Poll</string>
+>>>>>>> LSR-98 default strings and fix missing imports
 </resources>

@@ -51,7 +51,6 @@
 	<string name="call_menu_entry">Call (Monday &#8211; Friday, 06:00 &#8211; 22:00)</string>
 	<string name="default_telephone_uri">tel:900000000</string>
 	<string name="default_sms_uri">sms:900000000</string>
-<<<<<<< 1463a047360890fa788886b4492ed99821dcaa23
 	<string name="created">Created %s</string>
 	<string name="tour_image">Tour Image</string>
 	<string name="window">Window</string>
