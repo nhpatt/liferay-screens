@@ -25,6 +25,9 @@ public class BlogRenderer extends AudienceTargetingRenderer {
 		TextView content = (TextView) view.findViewById(R.id.audience_blog_content);
 		content.setText(Html.fromHtml(jsonObject.getString("content")));
 
+		TextView userName = (TextView) view.findViewById(R.id.audience_user_name);
+		userName.setText(Html.fromHtml(jsonObject.getString("userName")));
+
 		return view;
 	}
 
