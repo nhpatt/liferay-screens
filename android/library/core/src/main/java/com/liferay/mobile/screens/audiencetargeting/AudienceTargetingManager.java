@@ -73,8 +73,8 @@ public class AudienceTargetingManager {
 			AudienceTargetingListener listener = new AudienceTargetingListener() {
 				@Override
 				public void onFailure(Exception e) {
-					LiferayLogger.e("Couldn't load custom content", e);
 					_loadInteractor.onScreenletDetached(this);
+					LiferayLogger.e("Couldn't load custom content", e);
 				}
 
 				@Override

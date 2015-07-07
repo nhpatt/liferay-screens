@@ -49,16 +49,7 @@ public class AudienceTargetingRequestContentInteractorImpl
 	}
 
 	protected boolean isValidEvent(AudienceTargetingContentRequestedEvent event) {
-		if (getListener() == null) {
-			return false;
-		}
-
-		if (event.getTargetScreenletId() != getTargetScreenletId()) {
-			return false;
-		}
-
-		return true;
+		return getListener() != null && event.getTargetScreenletId() == getTargetScreenletId();
 	}
 
 }
-
