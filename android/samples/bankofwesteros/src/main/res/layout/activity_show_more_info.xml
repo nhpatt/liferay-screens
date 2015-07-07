@@ -16,6 +16,7 @@
 		android:id="@+id/blog"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_below="@+id/forum"
 		liferay:autoLoad="true"
 		liferay:placeholder="if_administration_show_journal"/>
 
