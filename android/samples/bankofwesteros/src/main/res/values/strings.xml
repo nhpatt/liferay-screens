@@ -69,4 +69,8 @@
 	<string name="show_more_info">Show more info</string>
 	<string name="sorry_we_couldnt_find_anything">Sorry we couldn\'t find anything</string>
 
+	<string name="settings_banner_placeholder">settings_banner</string>
+	<string name="more_info_content_placeholder">more_info_content</string>
+	<string name="demo_resources_content_placeholder">demo_resources_content</string>
+
 </resources>
