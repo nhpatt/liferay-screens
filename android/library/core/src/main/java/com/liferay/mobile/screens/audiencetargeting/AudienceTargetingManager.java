@@ -35,6 +35,13 @@ public class AudienceTargetingManager {
 		_loadInteractor = new AudienceTargetingLoadScreenletsInteractorImpl(screenletId);
 	}
 
+	public static void clearCache() {
+		SharedPreferences preferences = getSharedPreferences();
+		SharedPreferences.Editor edit = preferences.edit();
+		edit.clear();
+		edit.apply();
+	}
+
 	public static void storeAudienceResults(final List<AudienceTargetingResult> results) {
 		Set<String> jsonObjects = new HashSet<>();
 		for (AudienceTargetingResult result : results) {
