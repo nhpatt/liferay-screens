@@ -74,6 +74,8 @@ public class AudienceTargetingView extends LinearLayout implements AudienceTarge
 
 	private void addPlaceholder() {
 		AudienceTargetingScreenlet screenlet = (AudienceTargetingScreenlet) getParent();
-		LayoutInflater.from(getContext()).inflate(screenlet.getDefaultLayout(), this);
+		if (screenlet.getDefaultLayout() != 0) {
+			LayoutInflater.from(getContext()).inflate(screenlet.getDefaultLayout(), this);
+		}
 	}
 }

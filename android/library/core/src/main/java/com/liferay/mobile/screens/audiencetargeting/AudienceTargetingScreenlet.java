@@ -22,6 +22,7 @@ import com.liferay.mobile.screens.base.BaseScreenlet;
 import com.liferay.mobile.screens.context.LiferayServerContext;
 import com.liferay.mobile.screens.context.SessionContext;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -55,6 +56,9 @@ public class AudienceTargetingScreenlet
 			_loadContentAfterLoad = false;
 
 			if (!results.isEmpty()) {
+
+				Collections.sort(results);
+
 				loadContent(results.get(0));
 			} else {
 				getViewModel().showPlaceholder();

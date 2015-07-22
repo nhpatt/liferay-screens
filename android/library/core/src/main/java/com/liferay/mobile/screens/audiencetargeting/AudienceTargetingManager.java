@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +44,7 @@ public class AudienceTargetingManager {
 		SharedPreferences preferences = getSharedPreferences();
 		SharedPreferences.Editor edit = preferences.edit();
 		edit.putStringSet("results", jsonObjects);
-		edit.commit();
+		edit.apply();
 	}
 
 	public static List<AudienceTargetingResult> restoreAudienceResults() {
@@ -82,6 +83,9 @@ public class AudienceTargetingManager {
 					_loadInteractor.onScreenletDetached(this);
 					List<AudienceTargetingResult> results = event.getResults();
 					if (!results.isEmpty()) {
+
+						Collections.sort(results);
+
 						AudienceTargetingResult firstResult = results.get(0);
 						String localeValue = getLocaleValue(firstResult.getCustomContent());
 						audienceListener.onSuccess(localeValue);

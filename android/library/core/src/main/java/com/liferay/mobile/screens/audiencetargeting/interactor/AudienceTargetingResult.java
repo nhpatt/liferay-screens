@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Javier Gamarra
  */
-public class AudienceTargetingResult {
+public class AudienceTargetingResult implements Comparable<AudienceTargetingResult> {
 
 	public AudienceTargetingResult(final JSONObject object) {
 		try {
@@ -97,6 +97,19 @@ public class AudienceTargetingResult {
 
 	public JSONObject getObject() {
 		return _object;
+	}
+
+	@Override
+	public int compareTo(final AudienceTargetingResult another) {
+		if (_priority == null) {
+			return -1;
+		}
+		else if (another == null || another.getPriority() == null) {
+			return 1;
+		}
+		else {
+			return _priority.compareTo(another.getPriority());
+		}
 	}
 
 	private Integer _campaignId;
