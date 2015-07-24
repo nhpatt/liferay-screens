@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +23,15 @@ import com.liferay.mobile.screens.base.BaseScreenlet;
 import com.liferay.mobile.screens.context.LiferayServerContext;
 import com.liferay.mobile.screens.context.SessionContext;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Javier Gamarra
  */
 public class AudienceTargetingScreenlet
-		extends BaseScreenlet<AudienceTargetingViewModel, AudienceTargetingInteractor>
-		implements AudienceTargetingListener {
+	extends BaseScreenlet<AudienceTargetingViewModel, AudienceTargetingInteractor>
+	implements AudienceTargetingListener {
 
 	public AudienceTargetingScreenlet(Context context) {
 		super(context);
@@ -45,7 +46,7 @@ public class AudienceTargetingScreenlet
 	}
 
 	public void onSuccess(AudienceTargetingScreenletsLoadedEvent event) {
-		List<AudienceTargetingResult> results = event.getResults();
+		Map<String, Set<AudienceTargetingResult>> results = event.getResults();
 		AudienceTargetingManager.storeAudienceResults(results);
 
 		if (_listener != null) {
@@ -57,10 +58,9 @@ public class AudienceTargetingScreenlet
 
 			if (!results.isEmpty()) {
 
-				Collections.sort(results);
-
-				loadContent(results.get(0));
-			} else {
+				loadContent(AudienceTargetingManager.getResult(results, _placeholder));
+			}
+			else {
 				getViewModel().showPlaceholder();
 			}
 		}
@@ -195,31 +195,44 @@ public class AudienceTargetingScreenlet
 
 		if (LOAD_SCREENLETS.equals(userActionName)) {
 			try {
-				UserContext userContext = new UserContext();
-				userContext.setUserId(SessionContext.getLoggedUser().getId());
+				UserContext userContext = createUserContext();
 
 				AudienceTargetingLoadScreenletsInteractor loadScreenletsInteractor = (AudienceTargetingLoadScreenletsInteractor) interactor;
 
-				if ((args != null && args.length > 0) || _placeholder != null) {
-					String placeholder = (args != null && args.length > 0) ? (String) args[0] : _placeholder;
-					loadScreenletsInteractor.getScreenlets(_appName, _groupId, placeholder, userContext);
+				if ((args != null && args.length > 0)) {
+					_placeholder = (String) args[0];
+				}
+
+				if (_placeholder != null) {
+					if (AudienceTargetingManager.hasCachedAudienceResults(_placeholder)) {
+						onSuccess(AudienceTargetingManager.restoreAudienceResults());
+					}
+					else {
+						String placeholder = (args != null && args.length > 0) ? (String) args[0] : _placeholder;
+						loadScreenletsInteractor.getScreenlets(_appName, _groupId, placeholder, userContext);
+					}
 				}
 				else {
-					loadScreenletsInteractor.getScreenlets(_appName, _groupId, userContext);
+					if (AudienceTargetingManager.hasCachedAudienceResults()) {
+						onSuccess(AudienceTargetingManager.restoreAudienceResults());
+					}
+					else {
+						loadScreenletsInteractor.getScreenlets(_appName, _groupId, userContext);
+					}
 				}
-			} catch (Exception e) {
+
+			}
+			catch (Exception e) {
 				onFailure(e);
 			}
 		}
 		else if (REQUEST_CONTENT.equals(userActionName)) {
 
 			try {
-				UserContext userContext = new UserContext();
-				userContext.setUserId(SessionContext.getLoggedUser().getId());
-
 				AudienceTargetingRequestContentInteractor loadScreenletsInteractor = (AudienceTargetingRequestContentInteractor) interactor;
 				loadScreenletsInteractor.getContent((AudienceTargetingResult) args[0]);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				onFailure(e);
 			}
 		}
@@ -255,6 +268,13 @@ public class AudienceTargetingScreenlet
 		Parcelable superState = state.getParcelable(_STATE_SUPER);
 
 		super.onRestoreInstanceState(superState);
+	}
+
+	@NonNull
+	private UserContext createUserContext() {
+		UserContext userContext = new UserContext();
+		userContext.setUserId(SessionContext.getLoggedUser().getId());
+		return userContext;
 	}
 
 	private static final String LOAD_SCREENLETS = "LOAD_SCREENLETS";

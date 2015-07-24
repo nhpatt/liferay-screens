@@ -9,7 +9,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Javier Gamarra
@@ -23,24 +28,31 @@ public class AudienceTargetingScreenletsLoadedEvent extends JSONArrayEvent {
 	public AudienceTargetingScreenletsLoadedEvent(final int targetScreenletId, final JSONArray jsonArray) {
 		super(targetScreenletId, jsonArray);
 
-		parseResponse(jsonArray);
+		_results = parseResponse(jsonArray);
 	}
 
-	public List<AudienceTargetingResult> getResults() {
+	public Map<String, Set<AudienceTargetingResult>> getResults() {
 		return _results;
 	}
 
-	private void parseResponse(final JSONArray jsonArray) {
+	private Map<String, Set<AudienceTargetingResult>> parseResponse(final JSONArray jsonArray) {
+		Map<String, Set<AudienceTargetingResult>> results = new HashMap<>();
 		try {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject object = (JSONObject) jsonArray.get(i);
-				_results.add(new AudienceTargetingResult(object));
+				AudienceTargetingResult result = new AudienceTargetingResult(object);
+
+				if (!results.containsKey(result.getPlaceholderId())) {
+					results.put(result.getPlaceholderId(), new HashSet<AudienceTargetingResult>());
+				}
+				results.get(result.getPlaceholderId()).add(result);
 			}
 		}
 		catch (JSONException e) {
 			LiferayLogger.e("Error parsing response of Audience Targeting");
 		}
+		return results;
 	}
 
-	private List<AudienceTargetingResult> _results = new ArrayList<AudienceTargetingResult>();
+	private Map<String, Set<AudienceTargetingResult>> _results = new HashMap<>();
 }

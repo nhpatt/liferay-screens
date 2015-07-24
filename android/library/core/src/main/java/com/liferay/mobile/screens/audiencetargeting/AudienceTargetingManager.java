@@ -14,6 +14,7 @@ import com.liferay.mobile.screens.context.LiferayServerContext;
 import com.liferay.mobile.screens.context.SessionContext;
 import com.liferay.mobile.screens.util.LiferayLogger;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,7 +31,11 @@ import java.util.Set;
  */
 public class AudienceTargetingManager {
 
-	public static final String AUDIENCE_TARGETING = "AUDIENCE_TARGETING";
+	public static final int AT_RESULTS_ID = 0;
+	public static final String AT_PREFERENCES = "AT_PREFERENCES";
+	public static final String AT_CACHED_PLACEHOLDERS = "AT_CACHED_PLACEHOLDERS";
+	public static final String AT_CACHED_RESULTS = "AT_CACHED_RESULTS";
+	public static final String AT_CACHED_USER_CONTEXT = "AT_CACHED_USER_CONTEXT";
 
 	public AudienceTargetingManager(int screenletId) {
 		_loadInteractor = new AudienceTargetingLoadScreenletsInteractorImpl(screenletId);
@@ -42,32 +48,76 @@ public class AudienceTargetingManager {
 		edit.apply();
 	}
 
-	public static void storeAudienceResults(final List<AudienceTargetingResult> results) {
-		Set<String> jsonObjects = new HashSet<>();
-		for (AudienceTargetingResult result : results) {
-			jsonObjects.add(result.getObject().toString());
-		}
+	public static void storeAudienceResults(final Map<String, Set<AudienceTargetingResult>> results) {
 
 		SharedPreferences preferences = getSharedPreferences();
 		SharedPreferences.Editor edit = preferences.edit();
-		edit.putStringSet("results", jsonObjects);
+
+		Set<String> placeholderIds = new HashSet<>();
+
+		for (String placeholderId : results.keySet()) {
+			Set<String> jsonObjects = new HashSet<>();
+
+			placeholderIds.add(placeholderId);
+
+			Set<AudienceTargetingResult> audienceTargetingResults = results.get(placeholderId);
+			for (AudienceTargetingResult result : audienceTargetingResults) {
+				jsonObjects.add(result.getObject().toString());
+			}
+
+			edit.putStringSet(AT_CACHED_RESULTS + placeholderId, jsonObjects);
+		}
+
+		edit.putStringSet(AT_CACHED_PLACEHOLDERS, placeholderIds);
+		edit.putLong(AT_CACHED_USER_CONTEXT, SessionContext.getLoggedUser().getId());
 		edit.apply();
 	}
 
-	public static List<AudienceTargetingResult> restoreAudienceResults() {
-		List<AudienceTargetingResult> results = new ArrayList<>();
+	public static AudienceTargetingScreenletsLoadedEvent restoreAudienceResults() {
+		JSONArray jsonArray = new JSONArray();
 		try {
 			SharedPreferences preferences = getSharedPreferences();
-			Set<String> objects = preferences.getStringSet("results", new HashSet<String>());
+			Set<String> placeholderIds = preferences.getStringSet(AT_CACHED_PLACEHOLDERS, new HashSet<String>());
 
-			for (String object : objects) {
-				results.add(new AudienceTargetingResult(new JSONObject(object)));
+			for (String placeholderId : placeholderIds) {
+
+				Set<String> values = preferences.getStringSet(AT_CACHED_RESULTS + placeholderId, new HashSet<String>());
+
+				for (String value : values) {
+					jsonArray.put(new JSONObject(value));
+				}
 			}
 		}
 		catch (JSONException e) {
-			LiferayLogger.e("Error restoring audience targeting results", e);
+			LiferayLogger.e("Error restoring audience targeting objects", e);
 		}
-		return results;
+		return new AudienceTargetingScreenletsLoadedEvent(AT_RESULTS_ID, jsonArray);
+	}
+
+	public static boolean hasCachedAudienceResults(String placeholderId) {
+		SharedPreferences preferences = getSharedPreferences();
+		Long cachedUserContext = preferences.getLong(AT_CACHED_USER_CONTEXT, 0);
+
+		boolean userCachedIsTheSameAsLoggedIn = cachedUserContext.equals(SessionContext.getLoggedUser().getId());
+		boolean placeholderCached = preferences.contains(AT_CACHED_RESULTS + placeholderId);
+
+		return placeholderCached && userCachedIsTheSameAsLoggedIn;
+	}
+
+	public static boolean hasCachedAudienceResults() {
+		return hasCachedAudienceResults("");
+	}
+
+	public static AudienceTargetingResult getResult(Map<String, Set<AudienceTargetingResult>> results, String placeholder) {
+
+		if (results.containsKey(placeholder)) {
+			List<AudienceTargetingResult> elements = new ArrayList<>(results.get(placeholder));
+
+			Collections.sort(elements);
+			return elements.get(0);
+		}
+
+		return null;
 	}
 
 	public void getCustomContent(final String placeholder, final AudienceListener audienceListener) {
@@ -88,13 +138,11 @@ public class AudienceTargetingManager {
 				@Override
 				public void onSuccess(AudienceTargetingScreenletsLoadedEvent event) {
 					_loadInteractor.onScreenletDetached(this);
-					List<AudienceTargetingResult> results = event.getResults();
+					Map<String, Set<AudienceTargetingResult>> results = event.getResults();
 					if (!results.isEmpty()) {
 
-						Collections.sort(results);
-
-						AudienceTargetingResult firstResult = results.get(0);
-						String localeValue = getLocaleValue(firstResult.getCustomContent());
+						AudienceTargetingResult result = getResult(results, placeholder);
+						String localeValue = getLocaleValue(result.getCustomContent());
 						audienceListener.onSuccess(localeValue);
 					}
 					else {
@@ -104,7 +152,7 @@ public class AudienceTargetingManager {
 
 				@Override
 				public void onSuccess(AudienceTargetingContentRequestedEvent event) {
-					throw new AssertionError("This should't be called");
+					throw new AssertionError("This shouldn't be called");
 				}
 			};
 
@@ -133,8 +181,9 @@ public class AudienceTargetingManager {
 	}
 
 	private static SharedPreferences getSharedPreferences() {
-		return LiferayScreensContext.getContext().getSharedPreferences(AUDIENCE_TARGETING, Context.MODE_PRIVATE);
+		return LiferayScreensContext.getContext().getSharedPreferences(AT_PREFERENCES, Context.MODE_PRIVATE);
 	}
 
 	private final AudienceTargetingLoadScreenletsInteractor _loadInteractor;
+
 }
