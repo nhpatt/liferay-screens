@@ -5,7 +5,6 @@ import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargeting
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.services.AudienceTargetingContentService;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.services.AudienceTargetingServiceFactory;
 import com.liferay.mobile.screens.base.interactor.BaseRemoteInteractor;
-import com.liferay.mobile.screens.base.interactor.BasicEvent;
 import com.liferay.mobile.screens.util.LiferayLogger;
 
 /**

@@ -8,7 +8,7 @@ import org.json.JSONObject;
  * @author Javier Gamarra
  */
 public class AudienceTargetingJSONRequestedEvent extends JSONObjectEvent
-		implements AudienceTargetingContentRequestedEvent {
+	implements AudienceTargetingContentRequestedEvent {
 
 	public AudienceTargetingJSONRequestedEvent(final int targetScreenletId, final Exception e) {
 		super(targetScreenletId, e);

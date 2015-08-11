@@ -30,8 +30,8 @@ import java.util.Set;
  * @author Javier Gamarra
  */
 public class AudienceTargetingScreenlet
-	extends BaseScreenlet<AudienceTargetingViewModel, AudienceTargetingInteractor>
-	implements AudienceTargetingListener {
+		extends BaseScreenlet<AudienceTargetingViewModel, AudienceTargetingInteractor>
+		implements AudienceTargetingListener {
 
 	public AudienceTargetingScreenlet(Context context) {
 		super(context);
@@ -47,7 +47,6 @@ public class AudienceTargetingScreenlet
 
 	public void onSuccess(AudienceTargetingScreenletsLoadedEvent event) {
 		Map<String, Set<AudienceTargetingResult>> results = event.getResults();
-		AudienceTargetingManager.storeAudienceResults(results);
 
 		if (_listener != null) {
 			_listener.onSuccess(event);
@@ -77,13 +76,6 @@ public class AudienceTargetingScreenlet
 		_loadContentAfterLoad = false;
 	}
 
-	@Override
-	protected void onScreenletAttached() {
-		if (_autoLoad) {
-			loadAndLoadContent();
-		}
-	}
-
 	public void onFailure(Exception e) {
 		getViewModel().showFailedOperation(null, e);
 
@@ -102,11 +94,6 @@ public class AudienceTargetingScreenlet
 
 	public void loadContent(final AudienceTargetingResult audienceTargetingResult) {
 		performUserAction(REQUEST_CONTENT, audienceTargetingResult);
-	}
-
-	private void loadAndLoadContent() {
-		_loadContentAfterLoad = true;
-		performUserAction(LOAD_SCREENLETS, _placeholder);
 	}
 
 	public boolean isAutoLoad() {
@@ -158,6 +145,13 @@ public class AudienceTargetingScreenlet
 	}
 
 	@Override
+	protected void onScreenletAttached() {
+		if (_autoLoad) {
+			loadAndLoadContent();
+		}
+	}
+
+	@Override
 	protected View createScreenletView(Context context, AttributeSet attributes) {
 		TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributes, R.styleable.AudienceTargetingScreenlet, 0, 0);
 
@@ -204,21 +198,11 @@ public class AudienceTargetingScreenlet
 				}
 
 				if (_placeholder != null) {
-					if (AudienceTargetingManager.hasCachedAudienceResults(_placeholder)) {
-						onSuccess(AudienceTargetingManager.restoreAudienceResults());
-					}
-					else {
-						String placeholder = (args != null && args.length > 0) ? (String) args[0] : _placeholder;
-						loadScreenletsInteractor.getScreenlets(_appName, _groupId, placeholder, userContext);
-					}
+					String placeholder = (args != null && args.length > 0) ? (String) args[0] : _placeholder;
+					loadScreenletsInteractor.getScreenlets(_appName, _groupId, placeholder, userContext);
 				}
 				else {
-					if (AudienceTargetingManager.hasCachedAudienceResults()) {
-						onSuccess(AudienceTargetingManager.restoreAudienceResults());
-					}
-					else {
-						loadScreenletsInteractor.getScreenlets(_appName, _groupId, userContext);
-					}
+					loadScreenletsInteractor.getScreenlets(_appName, _groupId, userContext);
 				}
 
 			}
@@ -268,6 +252,11 @@ public class AudienceTargetingScreenlet
 		Parcelable superState = state.getParcelable(_STATE_SUPER);
 
 		super.onRestoreInstanceState(superState);
+	}
+
+	private void loadAndLoadContent() {
+		_loadContentAfterLoad = true;
+		performUserAction(LOAD_SCREENLETS, _placeholder);
 	}
 
 	@NonNull

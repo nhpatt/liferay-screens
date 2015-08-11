@@ -6,7 +6,7 @@ import com.liferay.mobile.screens.base.interactor.BasicEvent;
  * @author Javier Gamarra
  */
 public class AudienceTargetingStringRequestedEvent extends BasicEvent
-		implements AudienceTargetingContentRequestedEvent {
+	implements AudienceTargetingContentRequestedEvent {
 
 	public AudienceTargetingStringRequestedEvent(final int targetScreenletId, final Exception e) {
 		super(targetScreenletId, e);

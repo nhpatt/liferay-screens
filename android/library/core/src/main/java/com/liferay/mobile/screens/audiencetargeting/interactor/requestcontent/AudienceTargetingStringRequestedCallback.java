@@ -2,13 +2,12 @@ package com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent;
 
 import com.liferay.mobile.screens.base.interactor.BasicEvent;
 import com.liferay.mobile.screens.base.interactor.InteractorAsyncTaskCallback;
-import com.liferay.mobile.screens.webcontentdisplay.interactor.WebContentDisplayEvent;
 
 /**
  * @author Javier Gamarra
  */
 public class AudienceTargetingStringRequestedCallback
-		extends InteractorAsyncTaskCallback<String> {
+	extends InteractorAsyncTaskCallback<String> {
 
 	public AudienceTargetingStringRequestedCallback(int targetScreenletId, String className) {
 		super(targetScreenletId);

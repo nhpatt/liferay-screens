@@ -8,22 +8,22 @@ import org.json.JSONObject;
  */
 public class UserContext {
 
-	private Long userId;
-
 	public Long getUserId() {
-		return userId;
+		return _userId;
 	}
 
 	public void setUserId(final Long userId) {
-		this.userId = userId;
+		_userId = userId;
 	}
 
 	public JSONObject toJSON() throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 
-		jsonObject.put("userId", userId);
+		jsonObject.put("userId", _userId);
 
 		return jsonObject;
 	}
+
+	private Long _userId;
 
 }
