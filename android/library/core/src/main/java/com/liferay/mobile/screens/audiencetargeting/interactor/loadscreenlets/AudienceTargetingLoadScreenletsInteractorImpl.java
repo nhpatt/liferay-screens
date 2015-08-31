@@ -32,7 +32,7 @@ public class AudienceTargetingLoadScreenletsInteractorImpl
 		JSONObject jsonObject = userContext.toJSON();
 
 		ScreensAudienceTargetingService service = getAudienceTargetingService();
-		service.getContent(screenletApp, groupId, placeholder, jsonObject, null);
+		service.getContent(screenletApp, placeholder, jsonObject, null);
 	}
 
 	public void onEvent(AudienceTargetingScreenletsLoadedEvent event) {
