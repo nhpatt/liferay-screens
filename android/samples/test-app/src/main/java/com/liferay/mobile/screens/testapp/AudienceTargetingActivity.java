@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import com.liferay.mobile.screens.audiencetargeting.AudienceTargetingListener;
 import com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet;
-import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingLoadedEvent;
-import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
+import com.liferay.mobile.screens.audiencetargeting.interactor.loadscreenlets.AudienceTargetingScreenletsLoadedEvent;
+import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentRequestedEvent;
 import com.liferay.mobile.screens.viewsets.defaultviews.LiferayCrouton;
 
 /**
@@ -39,15 +40,16 @@ public class AudienceTargetingActivity extends ThemeActivity {
 			}
 
 			@Override
-			public void onSuccess(final AudienceTargetingLoadedEvent event) {
+			public void onSuccess(AudienceTargetingScreenletsLoadedEvent event) {
 				LiferayCrouton.info(AudienceTargetingActivity.this, "Audience targeting loaded successfully!");
-				screenlet.loadContent(event.getResults().get(0));
+				screenlet.loadContent((AudienceTargetingResult) event.getResults().get(screenlet.getPlaceholder()).toArray()[0]);
 			}
 
 			@Override
-			public void onSuccess(final AudienceTargetingContentEvent audienceTargetingContentEvent) {
+			public void onSuccess(AudienceTargetingContentRequestedEvent event) {
 				LiferayCrouton.info(AudienceTargetingActivity.this, "Content loaded!");
 			}
+
 		});
 	}
 
