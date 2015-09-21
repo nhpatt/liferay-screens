@@ -21,13 +21,14 @@ public class AudienceTargetingResult implements Comparable<AudienceTargetingResu
 			_classPK = object.getInt("classPK");
 			_customContent = object.getString("customContent");
 			_placeholderId = object.getString("placeholderId");
+			_placeholderKey = object.getString("placeholderKey");
 			_priority = object.getInt("priority");
 			_object = object;
 
 			JSONArray userSegmentIds = (JSONArray) object.get("userSegmentIds");
 
 			for (int i = 0; i < userSegmentIds.length(); i++) {
-				_userSegmentIds.add(userSegmentIds.getInt(i));
+				_userSegmentIds.add(userSegmentIds.getLong(i));
 			}
 		}
 		catch (JSONException e) {
@@ -87,11 +88,11 @@ public class AudienceTargetingResult implements Comparable<AudienceTargetingResu
 		_priority = priority;
 	}
 
-	public List<Integer> getUserSegmentIds() {
+	public List<Long> getUserSegmentIds() {
 		return _userSegmentIds;
 	}
 
-	public void setUserSegmentIds(final List<Integer> userSegmentIds) {
+	public void setUserSegmentIds(final List<Long> userSegmentIds) {
 		_userSegmentIds = userSegmentIds;
 	}
 
@@ -112,12 +113,17 @@ public class AudienceTargetingResult implements Comparable<AudienceTargetingResu
 		}
 	}
 
+	public String getPlaceholderKey() {
+		return _placeholderKey;
+	}
+
 	private Integer _campaignId;
 	private String _className;
 	private Integer _classPK;
 	private String _customContent;
 	private String _placeholderId;
 	private Integer _priority;
-	private List<Integer> _userSegmentIds = new ArrayList<Integer>();
+	private List<Long> _userSegmentIds = new ArrayList<>();
 	private JSONObject _object;
+	private String _placeholderKey;
 }

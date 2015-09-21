@@ -39,10 +39,10 @@ public class AudienceTargetingScreenletsLoadedEvent extends JSONArrayEvent {
 				JSONObject object = (JSONObject) jsonArray.get(i);
 				AudienceTargetingResult result = new AudienceTargetingResult(object);
 
-				if (!results.containsKey(result.getPlaceholderId())) {
-					results.put(result.getPlaceholderId(), new HashSet<AudienceTargetingResult>());
+				if (!results.containsKey(result.getPlaceholderKey())) {
+					results.put(result.getPlaceholderKey(), new HashSet<AudienceTargetingResult>());
 				}
-				results.get(result.getPlaceholderId()).add(result);
+				results.get(result.getPlaceholderKey()).add(result);
 			}
 		}
 		catch (JSONException e) {
