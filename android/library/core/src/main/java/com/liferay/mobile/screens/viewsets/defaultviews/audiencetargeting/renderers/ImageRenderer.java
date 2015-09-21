@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.liferay.mobile.screens.R;
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.context.LiferayScreensContext;
 import com.liferay.mobile.screens.context.LiferayServerContext;
 import com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingRenderer;
@@ -20,8 +21,15 @@ import org.json.JSONObject;
  */
 public class ImageRenderer extends AudienceTargetingRenderer {
 
+	public RequestCreator createRequest(String server, Context context, JSONObject result, Integer targetWidth)
+		throws JSONException {
+
+		String url = constructUrl(result, server);
+		return createPicassoRequest(context, targetWidth, url);
+	}
+
 	@Override
-	protected View fillView(final View view, final Object object) throws JSONException {
+	protected View fillView(final View view, AudienceTargetingResult result, final Object object) throws JSONException {
 		JSONObject jsonObject = (JSONObject) object;
 		RequestCreator request = createRequest(LiferayServerContext.getServer(), LiferayScreensContext.getContext(), jsonObject, null);
 
@@ -32,13 +40,6 @@ public class ImageRenderer extends AudienceTargetingRenderer {
 	@Override
 	protected int getLayout() {
 		return R.layout.audience_targeting_image_view_default;
-	}
-
-	public RequestCreator createRequest(String server, Context context, JSONObject result, Integer targetWidth)
-		throws JSONException {
-
-		String url = constructUrl(result, server);
-		return createPicassoRequest(context, targetWidth, url);
 	}
 
 	@NonNull

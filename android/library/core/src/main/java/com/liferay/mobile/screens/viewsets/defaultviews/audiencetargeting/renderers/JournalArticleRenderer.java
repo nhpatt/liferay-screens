@@ -3,6 +3,7 @@ package com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.rende
 import android.view.View;
 
 import com.liferay.mobile.screens.R;
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingRenderer;
 import com.liferay.mobile.screens.webcontentdisplay.WebContentDisplayScreenlet;
 
@@ -14,10 +15,11 @@ import org.json.JSONException;
 public class JournalArticleRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	protected View fillView(final View view, final Object object) throws JSONException {
+	protected View fillView(final View view, AudienceTargetingResult result, final Object object) throws JSONException {
 		String html = (String) object;
 
 		WebContentDisplayScreenlet webContent = (WebContentDisplayScreenlet) view.findViewById(R.id.audience_webcontent);
+		webContent.setAtResult(result);
 		webContent.onWebContentReceived(webContent, html);
 
 		return view;

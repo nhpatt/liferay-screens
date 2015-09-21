@@ -25,7 +25,7 @@ public class AudienceTargetingRequestContentInteractorImpl
 			AudienceTargetingContentService service = AudienceTargetingServiceFactory
 				.getContentServiceByClassName(result.getClassName());
 			if (service != null) {
-				service.retrieveBySessionAndClassPK(result.getClassPK(), result.getClassName(), getTargetScreenletId());
+				service.retrieveBySessionAndClassPK(result, getTargetScreenletId());
 			}
 		}
 		catch (Exception e) {

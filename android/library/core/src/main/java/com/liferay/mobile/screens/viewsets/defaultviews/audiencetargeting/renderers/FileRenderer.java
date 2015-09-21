@@ -3,6 +3,7 @@ package com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.rende
 import android.content.Context;
 import android.view.View;
 
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingRenderer;
 
 import org.json.JSONException;
@@ -13,7 +14,7 @@ import org.json.JSONException;
 public class FileRenderer extends AudienceTargetingRenderer {
 
 	@Override
-	public View render(final Object object, Context context) {
+	public View render(AudienceTargetingResult result, final Object object, Context context) {
 
 		new Thread(new DownloadTask(context, object)).start();
 
@@ -21,7 +22,7 @@ public class FileRenderer extends AudienceTargetingRenderer {
 	}
 
 	@Override
-	protected View fillView(View view, Object jsonObject) throws JSONException {
+	protected View fillView(View view, AudienceTargetingResult result, Object jsonObject) throws JSONException {
 		return null;
 	}
 

@@ -57,7 +57,9 @@ public class AudienceTargetingScreenlet
 
 			if (!results.isEmpty()) {
 
-				loadContent(AudienceTargetingManager.getResult(results, _placeholder));
+				AudienceTargetingResult result = AudienceTargetingManager.getResult(results, _placeholder);
+				loadContent(result);
+
 			}
 			else {
 				getViewModel().showPlaceholder();

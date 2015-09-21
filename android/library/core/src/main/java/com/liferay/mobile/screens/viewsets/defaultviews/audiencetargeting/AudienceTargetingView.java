@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.liferay.mobile.screens.audiencetargeting.AudienceTargetingScreenlet;
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent.AudienceTargetingContentRequestedEvent;
 import com.liferay.mobile.screens.audiencetargeting.view.AudienceTargetingViewModel;
 import com.liferay.mobile.screens.util.LiferayLogger;
@@ -31,11 +32,16 @@ public class AudienceTargetingView extends LinearLayout implements AudienceTarge
 
 	@Override
 	public void showAudienceContent(final AudienceTargetingContentRequestedEvent event) {
+		_result = event.getResult();
+
 		try {
+
+			ATTrackingActions.postWithATResult(getContext(), ATTrackingActions.VIEW, event.getResult(), "");
+
 			AudienceTargetingRenderer renderer = new AudienceTargetingRendererFactory()
-				.getRenderer(event.getClassName(), event.getContent());
+				.getRenderer(event.getResult().getClassName(), event.getContent());
 			if (renderer != null) {
-				View view = renderer.render(event.getContent(), getContext());
+				View view = renderer.render(event.getResult(), event.getContent(),  getContext());
 				if (view != null) {
 					addView(view);
 					return;

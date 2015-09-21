@@ -1,5 +1,6 @@
 package com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent;
 
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.base.interactor.BasicEvent;
 import com.liferay.mobile.screens.base.interactor.InteractorAsyncTaskCallback;
 
@@ -9,9 +10,10 @@ import com.liferay.mobile.screens.base.interactor.InteractorAsyncTaskCallback;
 public class AudienceTargetingStringRequestedCallback
 	extends InteractorAsyncTaskCallback<String> {
 
-	public AudienceTargetingStringRequestedCallback(int targetScreenletId, String className) {
+	public AudienceTargetingStringRequestedCallback(int targetScreenletId, AudienceTargetingResult request) {
 		super(targetScreenletId);
-		_className = className;
+
+		_request = request;
 	}
 
 	@Override
@@ -21,14 +23,13 @@ public class AudienceTargetingStringRequestedCallback
 
 	@Override
 	protected BasicEvent createEvent(final int targetScreenletId, final String result) {
-		return new AudienceTargetingStringRequestedEvent(targetScreenletId, _className, result);
+		return new AudienceTargetingStringRequestedEvent(targetScreenletId, _request, result);
 	}
 
 	@Override
 	protected BasicEvent createEvent(int targetScreenletId, Exception e) {
-		return new AudienceTargetingStringRequestedEvent(targetScreenletId, e);
+		return new AudienceTargetingStringRequestedEvent(targetScreenletId, _request, e);
 	}
 
-	private final String _className;
-
+	private final AudienceTargetingResult _request;
 }

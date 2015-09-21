@@ -4,6 +4,7 @@ package com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.rende
 import android.view.View;
 
 import com.liferay.mobile.screens.R;
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.viewsets.defaultviews.audiencetargeting.AudienceTargetingRenderer;
 
 import org.json.JSONException;
@@ -14,7 +15,7 @@ import org.json.JSONObject;
  */
 public class BookmarkRenderer extends AudienceTargetingRenderer {
 	@Override
-	protected View fillView(final View view, final Object object) throws JSONException {
+	protected View fillView(final View view, AudienceTargetingResult result, final Object object) throws JSONException {
 		JSONObject jsonObject = (JSONObject) object;
 		//TODO implement
 		return view;

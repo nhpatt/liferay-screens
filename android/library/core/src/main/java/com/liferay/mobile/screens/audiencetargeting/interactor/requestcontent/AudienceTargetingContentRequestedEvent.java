@@ -1,8 +1,7 @@
 package com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent;
 
-/**
- * Created by nhpatt on 30/06/2015.
- */
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
+
 public interface AudienceTargetingContentRequestedEvent {
 	boolean isFailed();
 
@@ -12,5 +11,5 @@ public interface AudienceTargetingContentRequestedEvent {
 
 	Object getContent();
 
-	String getClassName();
+	AudienceTargetingResult getResult();
 }

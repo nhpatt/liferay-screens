@@ -1,5 +1,6 @@
 package com.liferay.mobile.screens.audiencetargeting.interactor.requestcontent;
 
+import com.liferay.mobile.screens.audiencetargeting.interactor.AudienceTargetingResult;
 import com.liferay.mobile.screens.base.interactor.BasicEvent;
 
 /**
@@ -8,15 +9,18 @@ import com.liferay.mobile.screens.base.interactor.BasicEvent;
 public class AudienceTargetingStringRequestedEvent extends BasicEvent
 	implements AudienceTargetingContentRequestedEvent {
 
-	public AudienceTargetingStringRequestedEvent(final int targetScreenletId, final Exception e) {
+	public AudienceTargetingStringRequestedEvent(
+		final int targetScreenletId, AudienceTargetingResult result, final Exception e) {
 		super(targetScreenletId, e);
+		_result = result;
 	}
 
-	public AudienceTargetingStringRequestedEvent(int targetScreenletId, String className, String html) {
+	public AudienceTargetingStringRequestedEvent(
+		int targetScreenletId, AudienceTargetingResult result, String html) {
 		super(targetScreenletId);
 
 		_html = html;
-		_className = className;
+		_result = result;
 	}
 
 	public String getHtml() {
@@ -29,10 +33,10 @@ public class AudienceTargetingStringRequestedEvent extends BasicEvent
 	}
 
 	@Override
-	public String getClassName() {
-		return _className;
+	public AudienceTargetingResult getResult() {
+		return _result;
 	}
 
 	private String _html;
-	private String _className;
+	private final AudienceTargetingResult _result;
 }
