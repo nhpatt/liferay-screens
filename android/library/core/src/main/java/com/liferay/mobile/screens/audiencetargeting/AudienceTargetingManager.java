@@ -91,7 +91,7 @@ public class AudienceTargetingManager {
 			try {
 				JSONObject object = new JSONObject(result);
 				Locale locale = LiferayScreensContext.getContext().getResources().getConfiguration().locale;
-				String stringLocale = object.has(locale.toString()) ? locale.toString() : Locale.ENGLISH.toString();
+				String stringLocale = object.has(locale.toString()) && !"".equals(object.get(locale.toString())) ? locale.toString() : Locale.US.toString();
 				return object.getString(stringLocale);
 
 			}
