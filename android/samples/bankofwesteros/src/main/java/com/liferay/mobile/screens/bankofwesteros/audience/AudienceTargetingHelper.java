@@ -36,8 +36,10 @@ public class AudienceTargetingHelper {
 		manager.getCustomContent(IF_OLD_DONT_ALLOW_MESSAGES, new AudienceListener() {
 			@Override
 			public void onSuccess(String result) {
-				boolean showOldMessages = Boolean.valueOf(result);
-				messageButton.setVisibility(showOldMessages ? View.VISIBLE : View.GONE);
+				if (result != null && "true".equalsIgnoreCase(result)) {
+					boolean showOldMessages = Boolean.valueOf(result);
+					messageButton.setVisibility(showOldMessages ? View.VISIBLE : View.GONE);
+				}
 			}
 		});
 	}
@@ -49,8 +51,10 @@ public class AudienceTargetingHelper {
 		manager.getCustomContent(IF_DEVELOPER_SHOW_BUTTON, new AudienceListener() {
 			@Override
 			public void onSuccess(String result) {
-				boolean showDeveloperButton = Boolean.valueOf(result);
-				demoResources.setVisibility(showDeveloperButton ? View.VISIBLE : View.GONE);
+				if (result != null && "true".equalsIgnoreCase(result)) {
+					boolean showDeveloperButton = Boolean.valueOf(result);
+					demoResources.setVisibility(showDeveloperButton ? View.VISIBLE : View.GONE);
+				}
 			}
 		});
 	}
@@ -60,7 +64,7 @@ public class AudienceTargetingHelper {
 		manager.getCustomContent(IF_MARKETING_SHOW_DIALOG_TO_NEW_FORM, new AudienceListener() {
 			@Override
 			public void onSuccess(String result) {
-				if (result != null) {
+				if (result != null && "true".equalsIgnoreCase(result)) {
 					showDialog(activity);
 				}
 			}
