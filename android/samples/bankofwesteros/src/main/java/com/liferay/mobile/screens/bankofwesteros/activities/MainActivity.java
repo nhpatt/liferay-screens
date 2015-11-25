@@ -22,6 +22,7 @@ import android.view.ViewPropertyAnimator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import com.liferay.mobile.screens.audiencetargeting.AudienceListener;
+import com.liferay.mobile.screens.consumerreports.ConsumerTrackingActions;
 import com.liferay.mobile.screens.auth.forgotpassword.ForgotPasswordListener;
 import com.liferay.mobile.screens.auth.forgotpassword.ForgotPasswordScreenlet;
 import com.liferay.mobile.screens.auth.login.LoginListener;
