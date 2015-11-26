@@ -33,7 +33,7 @@ public class ConsumerdataeventService extends BaseService {
 	public JSONObject addConsumerDataEvent(
 		long companyId, long groupId, long consumerId,
 		String eventType, String className, long classPK,
-		String elementId, long modifiedDate, long dataValue) throws Exception {
+		String elementId, long createDate, long dataValue) throws Exception {
 		JSONObject _command = new JSONObject();
 
 		try {
@@ -46,10 +46,10 @@ public class ConsumerdataeventService extends BaseService {
 			_params.put("className", checkNull(className));
 			_params.put("classPK", classPK);
 			_params.put("elementId", checkNull(elementId));
-			_params.put("modifiedDate", modifiedDate);
+			_params.put("createDate", createDate);
 			_params.put("dataValue", dataValue);
 
-			_command.put("/report-screens.consumerdataevent/add-consumer-data-event", _params);
+			_command.put("/report-screens.screensconsumerevent/add-screens-consumer-event", _params);
 		}
 		catch (JSONException _je) {
 			throw new Exception(_je);
