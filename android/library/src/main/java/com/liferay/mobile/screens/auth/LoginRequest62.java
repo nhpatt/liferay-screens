@@ -13,14 +13,14 @@ import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.Calendar;
 
-public class LoginRequest {
+public class LoginRequest62 {
 
 	public static final String SERVER_URL = "http://192.168.50.222:8080";
 
-	public static final String IMAGE_URL = SERVER_URL + "/documents/20182/0/avatar.jpg/017b21eb-e89f-44b2-bf50-b71f2f6ce839?t=1460468873784";
+	public static final String IMAGE_URL = SERVER_URL + "/documents/20233/0/sdafasdf.jpg/cc96d006-1b14-5fc0-e9e2-e9006e1735bd?t=1460535292314";
 
 	public static void main(String... args) {
-		LoginRequest loginRequest = new LoginRequest();
+		LoginRequest62 loginRequest = new LoginRequest62();
 		loginRequest.request("test@liferay.com", "test");
 	}
 
@@ -53,6 +53,9 @@ public class LoginRequest {
 				.build();
 
 			client.newCall(request).execute();
+			Response response1 = client.newCall(request).execute();
+			ResponseBody body1 = response1.body();
+			System.out.println(body1.string());
 
 			request = new Request.Builder()
 				.url(IMAGE_URL)
@@ -60,7 +63,7 @@ public class LoginRequest {
 
 			Response response = client.newCall(request).execute();
 			ResponseBody body = response.body();
-			LiferayLogger.e(body.string());
+			System.out.println(body.string());
 
 		}
 		catch (IOException e) {
