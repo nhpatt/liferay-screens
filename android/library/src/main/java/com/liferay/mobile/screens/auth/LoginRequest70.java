@@ -3,6 +3,7 @@ package com.liferay.mobile.screens.auth;
 import com.liferay.mobile.android.service.SessionImpl;
 import com.liferay.mobile.android.v7.user.UserService;
 import com.liferay.mobile.screens.util.LiferayLogger;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -13,6 +14,7 @@ import com.squareup.okhttp.ResponseBody;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.Calendar;
@@ -22,24 +24,60 @@ import java.util.Map;
 
 public class LoginRequest70 {
 
-	public static final String SERVER_URL = "http://192.168.50.222:8080";
+	public static final String SERVER_URL = "http://192.168.40.147:8080";
 
-	public static final String IMAGE_URL = SERVER_URL + "/documents/20233/0/screens-android-intro.png/b6f896d2-4dcc-c9f5-c890-202d49f35b43?t=1460626521882";
+	//	public static final String IMAGE_URL = SERVER_URL + "/documents/20233/0/screens-android-intro.png/b6f896d2-4dcc-c9f5-c890-202d49f35b43?t=1460626521882";
 	public static final String FIRST_LOGIN = "/web/guest/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&saveLastPath=false&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin";
 	public static final int TOKEN_LENGTH = 8;
 	public static final String LIFERAY_AUTH_TOKEN = "Liferay.authToken=\"";
 
 	public static void main(String... args) {
-		LoginRequest70 loginRequest = new LoginRequest70();
-		loginRequest.request("test@liferay.com", "test");
+//		LoginRequest70 loginRequest = new LoginRequest70();
+//		loginRequest.request("test@liferay.com", "test");
 	}
 
-	public void request(String user, String password) {
+	private void request(String user, String password) {
 		String url = SERVER_URL + "/web/guest/home?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin";
-		request(url, user, password);
+		request2(url, user, password);
 	}
 
-	public void request(String url, String user, String password) {
+	private void request2(String url, String user, String password) {
+
+		try {
+			OkHttpClient client = new OkHttpClient();
+			CookieManager cookieManager = new CookieManager();
+			cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+			client.setCookieHandler(cookieManager);
+
+			RequestBody formBody = new FormEncodingBuilder()
+				.add("_58_formDate", String.valueOf(Calendar.getInstance().getTimeInMillis()))
+				.add("_58_saveLastPath", "false")
+				.add("_58_redirect", "")
+				.add("_58_doActionAfterLogin", "false")
+				.add("_58_login", user)
+				.add("_58_password", password)
+				.add("_58_rememberMe", "false")
+				.build();
+
+			Request request = new Request.Builder()
+				.url(SERVER_URL + "/c/portal/login")
+//			.addHeader("Cookie", "COOKIE_SUPPORT=true; JSESSIONID=" + jSessionId + ";")
+				.post(formBody)
+				.build();
+			Response response = null;
+
+			response = client.newCall(request).execute();
+
+			String body = response.body().string();
+			System.out.println(body);
+
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void request(String url, String user, String password) {
 		try {
 			OkHttpClient client = new OkHttpClient();
 			CookieManager cookieManager = new CookieManager();
@@ -122,7 +160,8 @@ public class LoginRequest70 {
 				session.setHeaders(headers);
 				UserService userService = new UserService(session);
 				JSONObject jsonObject = userService.getUserByScreenName(20202, "test");
-				LiferayLogger.e(jsonObject.toString());
+				System.out.println(jsonObject.toString());
+//				LiferayLogger.e(jsonObject.toString());
 
 			}
 
