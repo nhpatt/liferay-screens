@@ -18,6 +18,7 @@ import android.content.Context;
 
 import com.liferay.mobile.android.auth.Authentication;
 import com.liferay.mobile.android.auth.basic.BasicAuthentication;
+import com.liferay.mobile.android.auth.basic.CookieAuthentication;
 import com.liferay.mobile.android.oauth.OAuth;
 import com.liferay.mobile.screens.base.AbstractFactory;
 import com.liferay.mobile.screens.base.FactoryProvider;
@@ -132,8 +133,11 @@ public class CredentialsStorageBuilder {
 			}
 		}
 		else {
-			if (_auth instanceof BasicAuthentication) {
+			if (_auth instanceof BasicAuthentication ) {
 				return instance.getBasicCredentialsStorageSharedPreferences();
+			}
+			if (_auth instanceof CookieAuthentication) {
+				return instance.getSessionCredentialsStorageSharedPreferences();
 			}
 			else if (_auth instanceof OAuth) {
 				return instance.getOAuthCredentialsStorageSharedPreferences();
