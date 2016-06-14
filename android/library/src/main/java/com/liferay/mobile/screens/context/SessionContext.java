@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -15,13 +15,16 @@
 package com.liferay.mobile.screens.context;
 
 import com.liferay.mobile.android.auth.Authentication;
+import com.liferay.mobile.android.auth.SignIn;
 import com.liferay.mobile.android.auth.basic.BasicAuthentication;
 import com.liferay.mobile.android.oauth.OAuth;
 import com.liferay.mobile.android.oauth.OAuthConfig;
 import com.liferay.mobile.android.service.Session;
 import com.liferay.mobile.android.service.SessionImpl;
+import com.liferay.mobile.screens.auth.login.CookieCallback;
 import com.liferay.mobile.screens.context.storage.CredentialsStorage;
 import com.liferay.mobile.screens.context.storage.CredentialsStorageBuilder;
+import com.liferay.mobile.screens.util.LiferayLogger;
 
 /**
  * @author Silvio Santos
@@ -31,6 +34,27 @@ public class SessionContext {
 	public static void logout() {
 		_currentUserSession = null;
 		_currentUser = null;
+	}
+
+	public static void createCookie(String username, String password, final CookieCallback callback) {
+
+		Session session = new SessionImpl(LiferayServerContext.getServer(), new BasicAuthentication(username, password));
+
+		SignIn.signInWithCookie(session, new CookieCallback() {
+
+			@Override
+			public void onFailure(Exception exception) {
+				LiferayLogger.e(exception.getMessage(), exception);
+				callback.onFailure(exception);
+			}
+
+			@Override
+			public void onSuccess(Session session) {
+				_currentUserSession = session;
+				callback.onSuccess(session);
+			}
+		});
+
 	}
 
 	public static Session createBasicSession(String username, String password) {

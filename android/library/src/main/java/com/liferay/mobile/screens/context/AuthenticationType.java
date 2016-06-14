@@ -19,5 +19,17 @@ package com.liferay.mobile.screens.context;
  */
 public enum AuthenticationType {
 
-	BASIC, OAUTH, VOID
+	BASIC, OAUTH, COOKIE, VOID;
+
+	public int toInt() {
+		return this.ordinal();
+	}
+
+	public static AuthenticationType valueOf(int ordinal) {
+		return AuthenticationType.values()[ordinal];
+	}
+
+	public boolean isFormBased() {
+		return this.equals(BASIC) || this.equals(COOKIE);
+	}
 }

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -35,21 +35,11 @@ public class LoginBasicInteractor extends BaseLoginInteractor {
 	public void login() throws Exception {
 		validate(_login, _password, _basicAuthMethod);
 
-		UserConnector userConnector = getUserConnector(_login, _password);
+		Session session = SessionContext.createBasicSession(_login, _password);
+		session.setCallback(new JSONObjectCallback(getTargetScreenletId()));
+		UserConnector userConnector = ServiceProvider.getInstance().getUserConnector(session);
 
-		switch (_basicAuthMethod) {
-			case EMAIL:
-				userConnector.getUserByEmailAddress(LiferayServerContext.getCompanyId(), _login);
-				break;
-
-			case USER_ID:
-				userConnector.getUserById(Long.parseLong(_login));
-				break;
-
-			case SCREEN_NAME:
-				userConnector.getUserByScreenName(LiferayServerContext.getCompanyId(), _login);
-				break;
-		}
+		getUserWithAuthMethod(userConnector);
 	}
 
 	public void setLogin(String login) {
@@ -62,12 +52,6 @@ public class LoginBasicInteractor extends BaseLoginInteractor {
 
 	public void setBasicAuthMethod(BasicAuthMethod basicAuthMethod) {
 		_basicAuthMethod = basicAuthMethod;
-	}
-
-	protected UserConnector getUserConnector(String login, String password) {
-		Session session = SessionContext.createBasicSession(login, password);
-		session.setCallback(new JSONObjectCallback(getTargetScreenletId()));
-		return ServiceProvider.getInstance().getUserConnector(session);
 	}
 
 	protected void validate(String login, String password, BasicAuthMethod basicAuthMethod) {
@@ -85,6 +69,22 @@ public class LoginBasicInteractor extends BaseLoginInteractor {
 
 		if (basicAuthMethod == BasicAuthMethod.USER_ID && !TextUtils.isDigitsOnly(login)) {
 			throw new IllegalArgumentException("UserId has to be a number");
+		}
+	}
+
+	protected void getUserWithAuthMethod(UserConnector userConnector) throws Exception {
+		switch (_basicAuthMethod) {
+			case EMAIL:
+				userConnector.getUserByEmailAddress(LiferayServerContext.getCompanyId(), _login);
+				break;
+
+			case USER_ID:
+				userConnector.getUserById(Long.parseLong(_login));
+				break;
+
+			case SCREEN_NAME:
+				userConnector.getUserByScreenName(LiferayServerContext.getCompanyId(), _login);
+				break;
 		}
 	}
 

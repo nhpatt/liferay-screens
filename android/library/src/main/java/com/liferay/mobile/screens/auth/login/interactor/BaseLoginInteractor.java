@@ -30,7 +30,7 @@ public abstract class BaseLoginInteractor
 		super(targetScreenletId);
 	}
 
-	public void onEvent(JSONObjectEvent event) {
+	public void onEventMainThread(JSONObjectEvent event) {
 
 		LiferayLogger.i("event = [" + event + "]");
 

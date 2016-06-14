@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -29,6 +29,7 @@ import com.liferay.mobile.screens.auth.BasicAuthMethod;
 import com.liferay.mobile.screens.auth.login.interactor.LoginBasicInteractor;
 import com.liferay.mobile.screens.auth.login.interactor.LoginInteractor;
 import com.liferay.mobile.screens.auth.login.interactor.LoginOAuthInteractor;
+import com.liferay.mobile.screens.auth.login.interactor.LoginCookieInteractor;
 import com.liferay.mobile.screens.auth.login.view.LoginViewModel;
 import com.liferay.mobile.screens.base.BaseScreenlet;
 import com.liferay.mobile.screens.context.AuthenticationType;
@@ -46,8 +47,9 @@ public class LoginScreenlet
 	extends BaseScreenlet<LoginViewModel, LoginInteractor>
 	implements LoginListener {
 
-	public static final String OAUTH = "OAUTH";
+	public static final String OAUTH_AUTH = "OAUTH_AUTH";
 	public static final String BASIC_AUTH = "BASIC_AUTH";
+	public static final String COOKIE_AUTH = "COOKIE_AUTH";
 	public static final int REQUEST_OAUTH_CODE = 1;
 	public static final String LOGIN_SUCCESSFUL = "com.liferay.mobile.screens.auth.login.success";
 
@@ -91,15 +93,13 @@ public class LoginScreenlet
 				OAuthConfig oauthConfig = (OAuthConfig) intent.getSerializableExtra(
 					OAuthActivity.EXTRA_OAUTH_CONFIG);
 
-				LoginOAuthInteractor oauthInteractor = (LoginOAuthInteractor) getInteractor(OAUTH);
+				LoginOAuthInteractor oauthInteractor = (LoginOAuthInteractor) getInteractor(OAUTH_AUTH);
 				oauthInteractor.setOAuthConfig(oauthConfig);
 				oauthInteractor.login();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				onLoginFailure(e);
 			}
-		}
-		else if (result == Activity.RESULT_CANCELED && intent != null) {
+		} else if (result == Activity.RESULT_CANCELED && intent != null) {
 			Exception exception = (Exception) intent.getSerializableExtra(
 				OAuthActivity.EXTRA_EXCEPTION);
 			onLoginFailure(exception);
@@ -148,6 +148,14 @@ public class LoginScreenlet
 		getViewModel().setBasicAuthMethod(_basicAuthMethod);
 	}
 
+	public AuthenticationType getAuthType() {
+		return _authType;
+	}
+
+	public void setAuthType(AuthenticationType authType) {
+		_authType = authType;
+	}
+
 	public String getOauthConsumerKey() {
 		return _oauthConsumerKey;
 	}
@@ -179,6 +187,11 @@ public class LoginScreenlet
 		_oauthConsumerSecret =
 			typedArray.getString(R.styleable.LoginScreenlet_oauthConsumerSecret);
 
+		int authTypeValue = typedArray.getInt(R.styleable.LoginScreenlet_authType,
+			AuthenticationType.BASIC.toInt());
+
+		_authType = AuthenticationType.valueOf(authTypeValue);
+
 		int layoutId = typedArray.getResourceId(
 			R.styleable.LoginScreenlet_layoutId, getDefaultLayoutId());
 
@@ -186,16 +199,13 @@ public class LoginScreenlet
 
 		LoginViewModel loginViewModel = (LoginViewModel) view;
 
-		if (_oauthConsumerKey != null && _oauthConsumerSecret != null) {
-			loginViewModel.setAuthenticationType(AuthenticationType.OAUTH);
-		}
-		else {
+		loginViewModel.setAuthenticationType(_authType);
+
+		if (_authType.isFormBased()) {
 			int authMethodId = typedArray.getInt(R.styleable.LoginScreenlet_basicAuthMethod, 0);
 
 			_basicAuthMethod = BasicAuthMethod.getValue(authMethodId);
 			loginViewModel.setBasicAuthMethod(_basicAuthMethod);
-
-			loginViewModel.setAuthenticationType(AuthenticationType.BASIC);
 		}
 
 		typedArray.recycle();
@@ -207,8 +217,9 @@ public class LoginScreenlet
 	protected LoginInteractor createInteractor(String actionName) {
 		if (BASIC_AUTH.equals(actionName)) {
 			return new LoginBasicInteractor(getScreenletId());
-		}
-		else {
+		} else if (COOKIE_AUTH.equals(actionName)) {
+			return new LoginCookieInteractor(getScreenletId());
+		} else {
 			LoginOAuthInteractor oauthInteractor = new LoginOAuthInteractor(getScreenletId());
 
 			OAuthConfig config = new OAuthConfig(
@@ -223,7 +234,7 @@ public class LoginScreenlet
 
 	@Override
 	protected void onUserAction(String userActionName, LoginInteractor interactor, Object... args) {
-		if (BASIC_AUTH.equals(userActionName)) {
+		if (BASIC_AUTH.equals(userActionName) || COOKIE_AUTH.equals(userActionName)) {
 			LoginViewModel viewModel = getViewModel();
 			LoginBasicInteractor loginBasicInteractor = (LoginBasicInteractor) interactor;
 
@@ -235,12 +246,10 @@ public class LoginScreenlet
 
 			try {
 				interactor.login();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				onLoginFailure(e);
 			}
-		}
-		else {
+		} else {
 			LoginOAuthInteractor oauthInteractor = (LoginOAuthInteractor) interactor;
 
 			Intent intent = new Intent(getContext(), OAuthActivity.class);
@@ -249,9 +258,17 @@ public class LoginScreenlet
 		}
 	}
 
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
+
 	private LoginListener _listener;
 	private BasicAuthMethod _basicAuthMethod;
 	private StorageType _credentialsStorage;
+	private AuthenticationType _authType;
 
 	private String _oauthConsumerKey;
 	private String _oauthConsumerSecret;

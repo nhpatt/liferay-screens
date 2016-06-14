@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -125,11 +125,17 @@ public class LoginView extends LinearLayout
 	public void onClick(View view) {
 
 		LoginScreenlet loginScreenlet = (LoginScreenlet) getScreenlet();
-		if (view.getId() == R.id.liferay_login_button) {
-			loginScreenlet.performUserAction(LoginScreenlet.BASIC_AUTH);
-		}
-		else {
-			loginScreenlet.performUserAction(LoginScreenlet.OAUTH);
+
+		switch (_authenticationType) {
+			case COOKIE:
+				loginScreenlet.performUserAction(LoginScreenlet.COOKIE_AUTH);
+				break;
+			case OAUTH:
+				loginScreenlet.performUserAction(LoginScreenlet.OAUTH_AUTH);
+				break;
+			case BASIC:
+			default:
+				loginScreenlet.performUserAction(LoginScreenlet.BASIC_AUTH);
 		}
 	}
 
@@ -161,10 +167,10 @@ public class LoginView extends LinearLayout
 		}
 
 		if (_basicAuthenticationLayout != null) {
-			_basicAuthenticationLayout.setVisibility(AuthenticationType.BASIC.equals(_authenticationType) ? VISIBLE : GONE);
+			_basicAuthenticationLayout.setVisibility(_authenticationType.isFormBased() ? VISIBLE : GONE);
 		}
 
-		if (AuthenticationType.BASIC.equals(_authenticationType)) {
+		if (_authenticationType.isFormBased()) {
 			_loginEditText.setHint(getResources().getString(getLabelResourceForAuthMode()));
 		}
 
@@ -182,8 +188,7 @@ public class LoginView extends LinearLayout
 	protected int getLoginEditTextDrawableId() {
 		if (BasicAuthMethod.USER_ID.equals(_basicAuthMethod)) {
 			return R.drawable.default_user_icon;
-		}
-		else if (BasicAuthMethod.EMAIL.equals(_basicAuthMethod)) {
+		} else if (BasicAuthMethod.EMAIL.equals(_basicAuthMethod)) {
 			return R.drawable.default_mail_icon;
 		}
 		return R.drawable.default_user_icon;
