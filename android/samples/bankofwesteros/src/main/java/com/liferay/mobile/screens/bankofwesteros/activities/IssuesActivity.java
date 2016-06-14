@@ -359,4 +359,8 @@ public class IssuesActivity extends CardActivity implements View.OnClickListener
 	private TextView _reportIssueTitle;
 	private Button _sendButton;
 
+	@Override
+	public void authFailed() {
+
+	}
 }

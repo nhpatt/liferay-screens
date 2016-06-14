@@ -40,4 +40,9 @@ public class AddBookmarkActivity extends ThemeActivity implements AddBookmarkLis
 	}
 
 	private AddBookmarkScreenlet _screenlet;
+
+	@Override
+	public void authFailed() {
+
+	}
 }

@@ -72,4 +72,9 @@ public class CustomInteractorActivity extends ThemeActivity
 			}
 		}
 	}
+
+	@Override
+	public void authFailed() {
+
+	}
 }

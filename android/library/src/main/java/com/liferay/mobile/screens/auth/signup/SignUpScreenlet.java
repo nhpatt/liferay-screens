@@ -239,4 +239,10 @@ public class SignUpScreenlet
 	private SignUpListener _listener;
 	private LoginListener _autoLoginListener;
 
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
 }

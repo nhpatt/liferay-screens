@@ -158,6 +158,13 @@ public class ForgotPasswordScreenlet
 		}
 	}
 
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
+
 	private String _anonymousApiPassword;
 	private String _anonymousApiUserName;
 	private long _companyId;

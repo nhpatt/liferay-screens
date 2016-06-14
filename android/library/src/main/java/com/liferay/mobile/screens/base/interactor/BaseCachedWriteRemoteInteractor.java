@@ -7,7 +7,7 @@ import com.liferay.mobile.screens.util.LiferayLogger;
 /**
  * @author Javier Gamarra
  */
-public abstract class BaseCachedWriteRemoteInteractor<L, E extends RemoteWrite> extends BaseRemoteInteractor<L> {
+public abstract class BaseCachedWriteRemoteInteractor<L extends AuthFailed> extends BaseRemoteInteractor<L> {
 
 	public BaseCachedWriteRemoteInteractor(int targetScreenletId, OfflinePolicy offlinePolicy) {
 		super(targetScreenletId);
@@ -18,25 +18,20 @@ public abstract class BaseCachedWriteRemoteInteractor<L, E extends RemoteWrite> 
 	protected void storeWithCache(Object... args) throws Exception {
 		if (_offlinePolicy == OfflinePolicy.CACHE_ONLY) {
 			storeToCacheAndLaunchEvent(args);
-		}
-		else if (_offlinePolicy == OfflinePolicy.CACHE_FIRST) {
+		} else if (_offlinePolicy == OfflinePolicy.CACHE_FIRST) {
 			try {
 				storeToCacheAndLaunchEvent(args);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				online(args);
 			}
-		}
-		else if (_offlinePolicy == OfflinePolicy.REMOTE_FIRST) {
+		} else if (_offlinePolicy == OfflinePolicy.REMOTE_FIRST) {
 			try {
 				online(args);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				storeToCacheAndLaunchEvent(args);
 				LiferayLogger.i("Store online first failed, trying to store locally version");
 			}
-		}
-		else {
+		} else {
 			online(args);
 		}
 	}

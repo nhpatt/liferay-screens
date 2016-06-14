@@ -18,7 +18,7 @@ import org.json.JSONObject;
  * @author Javier Gamarra
  */
 public class UserPortraitUploadInteractorImpl
-	extends BaseCachedWriteRemoteInteractor<UserPortraitInteractorListener, UserPortraitUploadEvent>
+	extends BaseCachedWriteRemoteInteractor<UserPortraitInteractorListener>
 	implements UserPortraitUploadInteractor {
 
 	public UserPortraitUploadInteractorImpl(int targetScreenletId, OfflinePolicy offlinePolicy) {

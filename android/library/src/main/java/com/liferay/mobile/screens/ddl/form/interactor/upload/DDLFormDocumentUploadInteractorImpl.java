@@ -17,7 +17,7 @@ import org.json.JSONObject;
  * @author Javier Gamarra
  */
 public class DDLFormDocumentUploadInteractorImpl
-	extends BaseCachedWriteRemoteInteractor<DDLFormListener, DDLFormDocumentUploadEvent>
+	extends BaseCachedWriteRemoteInteractor<DDLFormListener>
 	implements DDLFormDocumentUploadInteractor {
 
 	public DDLFormDocumentUploadInteractorImpl(int targetScreenletId, OfflinePolicy offlinePolicy) {

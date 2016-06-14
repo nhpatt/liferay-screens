@@ -14,10 +14,12 @@
 
 package com.liferay.mobile.screens.auth.forgotpassword;
 
+import com.liferay.mobile.screens.base.interactor.AuthFailed;
+
 /**
  * @author Jose Manuel Navarro
  */
-public interface ForgotPasswordListener {
+public interface ForgotPasswordListener extends AuthFailed {
 
 	void onForgotPasswordRequestSuccess(boolean passwordSent);
 

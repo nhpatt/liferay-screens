@@ -125,4 +125,11 @@ public class DDLListScreenlet
 	private long _recordSetId;
 	private long _userId;
 	private OfflinePolicy _offlinePolicy;
+
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
 }

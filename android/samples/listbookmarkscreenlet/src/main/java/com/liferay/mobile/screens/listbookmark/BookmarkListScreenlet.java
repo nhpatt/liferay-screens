@@ -78,7 +78,15 @@ public class BookmarkListScreenlet extends BaseListScreenlet<Bookmark, BookmarkL
 		return new BookmarkListInteractorImpl(getScreenletId(), _offlinePolicy);
 	}
 
+
 	private long _groupId;
 	private long _folderId;
 	private OfflinePolicy _offlinePolicy;
+
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
 }

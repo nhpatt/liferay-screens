@@ -40,4 +40,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 		EditText password = (EditText) findViewById(R.id.liferay_password);
 		password.setText(R.string.default_password);
 	}
+
+	@Override
+	public void authFailed() {
+
+	}
 }

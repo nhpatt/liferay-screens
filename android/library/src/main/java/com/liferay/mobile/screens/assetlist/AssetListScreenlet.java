@@ -153,4 +153,8 @@ public class AssetListScreenlet
 	private String _portletItemName;
 	private HashMap<String, Object> _customEntryQuery = new HashMap<>();
 
+	@Override
+	public void authFailed() {
+
+	}
 }

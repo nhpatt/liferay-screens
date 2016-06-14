@@ -159,4 +159,8 @@ public class AccountSettingsActivity extends Activity implements View.OnClickLis
 
 	private UserPortraitScreenlet _userPortraitScreenlet;
 
+	@Override
+	public void authFailed() {
+
+	}
 }

@@ -105,4 +105,10 @@ public class AddBookmarkScreenlet
 	private long _folderId;
 	private AddBookmarkListener _listener;
 
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
 }

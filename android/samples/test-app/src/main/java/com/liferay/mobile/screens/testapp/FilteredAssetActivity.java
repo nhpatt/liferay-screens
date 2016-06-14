@@ -50,4 +50,9 @@ public class FilteredAssetActivity extends ThemeActivity implements BaseListList
 	public void storingToCache(Object object) {
 
 	}
+
+	@Override
+	public void authFailed() {
+
+	}
 }

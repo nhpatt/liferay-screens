@@ -693,4 +693,10 @@ public class DDLFormScreenlet
 	private boolean _loadRecordAfterForm;
 	private OfflinePolicy _offlinePolicy;
 
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
 }

@@ -73,6 +73,10 @@ public abstract class ThemeActivity extends AppCompatActivity {
 		snackbar.show();
 	}
 
+	public void authFailed() {
+
+	}
+
 	int[] themes = {R.style.default_theme, R.style.material_theme, R.style.westeros_theme};
 	int[] colors = {R.color.colorPrimary_default, R.color.colorPrimary_material, R.color.colorPrimary_westeros};
 	private Integer _currentThemePosition;

@@ -78,6 +78,11 @@ public class AssetListActivity extends ThemeActivity implements BaseListListener
 
 	}
 
+	@Override
+	public void authFailed() {
+
+	}
+
 	private AssetListScreenlet _screenlet;
 
 }

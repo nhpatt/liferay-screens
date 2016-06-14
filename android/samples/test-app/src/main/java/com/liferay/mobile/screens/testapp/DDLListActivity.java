@@ -126,5 +126,10 @@ public class DDLListActivity extends ThemeActivity implements BaseListListener<R
 		};
 	}
 
+	@Override
+	public void authFailed() {
+
+	}
+
 	private DDLListScreenlet _screenlet;
 }

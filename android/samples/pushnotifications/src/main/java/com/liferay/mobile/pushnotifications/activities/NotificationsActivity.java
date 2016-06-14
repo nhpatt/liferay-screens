@@ -134,4 +134,9 @@ public class NotificationsActivity extends PushScreensActivity implements BaseLi
 	}
 
 	private DDLListScreenlet ddlList;
+
+	@Override
+	public void authFailed() {
+
+	}
 }

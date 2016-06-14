@@ -147,4 +147,8 @@ public class MainActivity extends CardActivity implements View.OnClickListener, 
 	private ImageView _background;
 	private EditText _forgotPasswordField;
 
+	@Override
+	public void authFailed() {
+
+	}
 }

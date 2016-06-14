@@ -37,7 +37,7 @@ import org.json.JSONObject;
  * @author Jose Manuel Navarro
  */
 public class DDLFormUpdateRecordInteractorImpl
-	extends BaseCachedWriteRemoteInteractor<DDLFormListener, DDLFormUpdateRecordEvent>
+	extends BaseCachedWriteRemoteInteractor<DDLFormListener>
 	implements DDLFormUpdateRecordInteractor {
 
 	public DDLFormUpdateRecordInteractorImpl(int targetScreenletId, OfflinePolicy offlinePolicy) {

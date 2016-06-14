@@ -362,6 +362,13 @@ public class UserPortraitScreenlet
 		return bundle;
 	}
 
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
+		}
+	}
+
 	private static final String _STATE_SUPER = "userportrait-super";
 	private static final String _STATE_FILE_PATH = "userportrait-filePath";
 

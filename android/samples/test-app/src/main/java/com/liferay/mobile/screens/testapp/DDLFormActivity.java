@@ -145,6 +145,11 @@ public class DDLFormActivity extends ThemeActivity implements DDLFormListener {
 		}
 	}
 
+	@Override
+	public void authFailed() {
+
+	}
+
 	private DDLFormScreenlet _screenlet;
 	private boolean _loaded;
 

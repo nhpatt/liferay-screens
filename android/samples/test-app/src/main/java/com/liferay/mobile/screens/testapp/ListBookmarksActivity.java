@@ -58,4 +58,9 @@ public class ListBookmarksActivity extends AppCompatActivity implements Bookmark
 	public void interactorCalled() {
 
 	}
+
+	@Override
+	public void authFailed() {
+
+	}
 }

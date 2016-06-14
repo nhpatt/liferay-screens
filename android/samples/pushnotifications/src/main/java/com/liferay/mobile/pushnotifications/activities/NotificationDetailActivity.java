@@ -110,4 +110,9 @@ public class NotificationDetailActivity extends AppCompatActivity implements DDL
 	}
 
 	private DDLFormScreenlet ddlFormScreenlet;
+
+	@Override
+	public void authFailed() {
+
+	}
 }

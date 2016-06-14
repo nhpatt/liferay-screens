@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
+ * <p>
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * <p>
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
@@ -28,6 +28,7 @@ import com.liferay.mobile.screens.cache.OfflinePolicy;
 import com.liferay.mobile.screens.context.LiferayServerContext;
 import com.liferay.mobile.screens.context.SessionContext;
 import com.liferay.mobile.screens.webcontentdisplay.interactor.WebContentDisplayBaseInteractor;
+import com.liferay.mobile.screens.webcontentdisplay.interactor.WebContentDisplayEvent;
 import com.liferay.mobile.screens.webcontentdisplay.interactor.WebContentDisplayFromArticleIdInteractor;
 import com.liferay.mobile.screens.webcontentdisplay.interactor.WebContentDisplayFromArticleIdInteractorImpl;
 import com.liferay.mobile.screens.webcontentdisplay.interactor.WebContentDisplayFromClassPKInteractor;
@@ -61,8 +62,7 @@ public class WebContentDisplayScreenlet
 	public void load() {
 		if (_classPK != 0) {
 			performUserAction(WEB_CONTENT_BY_CLASS_PK);
-		}
-		else {
+		} else {
 			performUserAction(WEB_CONTENT_BY_ARTICLE_ID);
 		}
 	}
@@ -185,8 +185,7 @@ public class WebContentDisplayScreenlet
 		if ((_articleId != null) && SessionContext.isLoggedIn()) {
 			try {
 				load();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				onWebContentFailure(this, e);
 			}
 		}
@@ -230,15 +229,14 @@ public class WebContentDisplayScreenlet
 	protected WebContentDisplayBaseInteractor createInteractor(String actionName) {
 		if (WEB_CONTENT_BY_ARTICLE_ID.equals(actionName)) {
 			return new WebContentDisplayFromArticleIdInteractorImpl(getScreenletId(), _offlinePolicy);
-		}
-		else {
+		} else {
 			return new WebContentDisplayFromClassPKInteractorImpl(getScreenletId(), _offlinePolicy);
 		}
 	}
 
 	@Override
 	protected void onUserAction(String userActionName,
-								WebContentDisplayBaseInteractor interactor, Object... args) {
+	                            WebContentDisplayBaseInteractor interactor, Object... args) {
 
 		try {
 			Locale locale = getResources().getConfiguration().locale;
@@ -249,15 +247,13 @@ public class WebContentDisplayScreenlet
 					(WebContentDisplayFromArticleIdInteractor) getInteractor(userActionName);
 
 				interactorFromArticleId.load(_groupId, _articleId, _templateId, locale);
-			}
-			else {
+			} else {
 				WebContentDisplayFromClassPKInteractor interactorFromArticleId =
 					(WebContentDisplayFromClassPKInteractor) getInteractor(userActionName);
 
 				interactorFromArticleId.load(_classPK, _templateId, locale);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			onWebContentFailure(this, e);
 		}
 	}
@@ -266,6 +262,13 @@ public class WebContentDisplayScreenlet
 	protected void onScreenletAttached() {
 		if (_autoLoad) {
 			autoLoad();
+		}
+	}
+
+	@Override
+	public void authFailed() {
+		if (_listener != null) {
+			_listener.authFailed();
 		}
 	}
 
