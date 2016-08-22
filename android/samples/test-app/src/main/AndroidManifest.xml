@@ -16,11 +16,7 @@
 		android:supportsRtl="false"
 		android:theme="@style/Theme.AppCompat.Light">
 		<activity android:name=".MainActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
 
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
 		</activity>
 		<activity android:name=".SelectAssetActivity"/>
 		<activity android:name=".AssetListActivity"/>
@@ -44,7 +40,15 @@
 			android:name=".CommentsActivity"
 			android:windowSoftInputMode="adjustPan"/>
 		<activity android:name=".RatingsActivity"/>
-		<activity android:name=".AssetDisplayActivity" />
+		<activity android:name=".AssetDisplayActivity"/>
+
+		<activity android:name=".CardActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
 
 		<receiver android:name="com.liferay.mobile.screens.cache.CacheReceiver">
 			<intent-filter>
