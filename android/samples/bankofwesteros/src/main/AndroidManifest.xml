@@ -38,7 +38,7 @@
 
 		<receiver
 			android:name=".push.GCMBroadcastReceiver"
-			android:exported="false">
+			android:exported="false"/>
 		<meta-data
 			android:name="com.google.android.gms.version"
 			android:value="@integer/google_play_services_version"/>
@@ -52,19 +52,10 @@
 			</intent-filter>
 		</receiver>
 
-        <activity
-            android:name=".audience.NewPollActivity"
-         >
-        </activity>
-        <activity
-            android:name=".audience.ShowMoreInfoActivity"
-            >
-        </activity>
-		<service android:name=".push.PushService"/>
-
 		<activity android:name=".audience.NewPollActivity"/>
 		<activity android:name=".audience.ShowMoreInfoActivity"/>
-		<activity android:name=".push.PushActivity"/>
+
+		<service android:name=".push.PushService"/>
 	</application>
 
 </manifest>

@@ -4,11 +4,6 @@ android {
 	compileSdkVersion rootProject.ext.compileSdkVersion
 	buildToolsVersion rootProject.ext.buildToolsVersion
 
-	packagingOptions {
-		exclude 'META-INF/LICENSE'
-		exclude 'META-INF/NOTICE'
-	}
-
 	defaultConfig {
 		minSdkVersion rootProject.ext.minSdkVersion
 		targetSdkVersion rootProject.ext.targetSdkVersion
@@ -24,11 +19,10 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
-}
 
-buildscript {
-	repositories {
-		mavenCentral()
+	packagingOptions {
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/NOTICE'
 	}
 
 	productFlavors {

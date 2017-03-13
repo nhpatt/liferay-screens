@@ -1,14 +1,3 @@
 <resources>
 
-	<style name="SalesTheme" parent="WesterosTheme">
-		<item name="colorPrimary">#009688</item>
-		<item name="colorAccent">#00796B</item>
-		<!--<item name="colorAccent">#FFEB3B</item>-->
-		<item name="colorPrimaryDark">#00796B</item>
-		<item name="android:colorPrimary">#009688</item>
-		<item name="android:colorAccent">#00796B</item>
-		<!--<item name="android:colorAccent">#FFEB3B</item>-->
-		<item name="android:colorPrimaryDark">#00796B</item>
-	</style>
-
 </resources>
