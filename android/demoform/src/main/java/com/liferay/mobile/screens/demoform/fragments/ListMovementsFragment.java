@@ -4,17 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.liferay.mobile.screens.base.interactor.CustomInteractorListener;
+import com.liferay.mobile.screens.base.interactor.Interactor;
 import com.liferay.mobile.screens.base.list.BaseListListener;
+import com.liferay.mobile.screens.ddl.list.DDLListScreenlet;
 import com.liferay.mobile.screens.ddl.model.Record;
 import com.liferay.mobile.screens.demoform.R;
 import com.liferay.mobile.screens.demoform.activities.MainActivity;
 import java.util.List;
 
-public class ListMovementsFragment extends AccountsFragment implements BaseListListener<Record> {
+public class ListMovementsFragment extends AccountsFragment
+	implements BaseListListener<Record>, CustomInteractorListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.list_movements, container, false);
+
+		DDLListScreenlet ddlListScreenlet = (DDLListScreenlet) view.findViewById(R.id.ddl_form_screenlet);
+		ddlListScreenlet.setListener(this);
+		ddlListScreenlet.setUserId(0);
+		ddlListScreenlet.setCustomInteractorListener(this);
 
 		return view;
 	}
@@ -46,5 +55,10 @@ public class ListMovementsFragment extends AccountsFragment implements BaseListL
 
 	public static ListMovementsFragment newInstance(Record record) {
 		return new ListMovementsFragment();
+	}
+
+	@Override
+	public Interactor createInteractor(String actionName) {
+		return new FilterByUserNameColumnInteractor();
 	}
 }

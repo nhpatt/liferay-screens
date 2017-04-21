@@ -63,4 +63,8 @@ public class BaseListEvent<E> extends CacheEvent {
 	public void setQuery(Query query) {
 		this.query = query;
 	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
+	}
 }
