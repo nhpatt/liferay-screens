@@ -27,8 +27,8 @@ public class SignInCard extends Card implements View.OnClickListener {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		findViewById(R.id.liferay_forgot_link).setOnClickListener(this);
-		((TextView) findViewById(R.id.liferay_login)).setText(getResources().getString(R.string.liferay_login));
-		((TextView) findViewById(R.id.liferay_password)).setText(getResources().getString(R.string.liferay_password));
+		//((TextView) findViewById(R.id.liferay_login)).setText(getResources().getString(R.string.liferay_login));
+		//((TextView) findViewById(R.id.liferay_password)).setText(getResources().getString(R.string.liferay_password));
 	}
 
 	@Override
