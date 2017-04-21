@@ -61,21 +61,27 @@ public class AccountsView
 
 			String titleField = (String) entry.getServerValue(getLabelFields().get(0));
 			holder.textView.setText(titleField);
-			String updated = "Last transaction on " + entry.getServerValue("Updated");
-			holder.subtitleTextView.setText(updated);
+			Object updated1 = entry.getServerValue("Updated");
+			if (updated1 != null) {
+				String updated = "Last transaction on " + updated1;
+				holder.subtitleTextView.setText(updated);
+			}
 			String type = (String) entry.getServerValue("type");
 			holder.accountsIcon.setImageResource(getIcon(type));
-			String balance = entry.getServerValue("Balance") + " $";
-			holder.balanceText.setText(balance);
+			Object balance1 = entry.getServerValue("Balance");
+			if (balance1 != null) {
+				String balance = balance1 + " $";
+				holder.balanceText.setText(balance);
+			}
 		}
 
 		private int getIcon(String type) {
-			if ("[\"value 1\"]".equals(type)) {
+			if ("[\"Checking\"]".equals(type)) {
+				return R.drawable.ic_credit_card_black_24dp;
+			} else if ("[\"Mortgage\"]".equals(type)) {
 				return R.drawable.ic_account_balance_black_24dp;
-			} else if ("[\"value 2\"]".equals(type)) {
-				return R.drawable.ic_attach_money_black_24dp;
 			}
-			return R.drawable.ic_credit_card_black_24dp;
+			return R.drawable.ic_attach_money_black_24dp;
 		}
 
 		public class AccountsViewHolder extends BaseListAdapter.ViewHolder {

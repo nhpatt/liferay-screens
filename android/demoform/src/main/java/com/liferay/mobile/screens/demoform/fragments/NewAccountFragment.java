@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.liferay.mobile.screens.base.interactor.CustomInteractorListener;
+import com.liferay.mobile.screens.base.interactor.Interactor;
 import com.liferay.mobile.screens.base.list.BaseListListener;
 import com.liferay.mobile.screens.ddl.list.DDLListScreenlet;
 import com.liferay.mobile.screens.ddl.model.Record;
@@ -11,7 +13,7 @@ import com.liferay.mobile.screens.demoform.R;
 import com.liferay.mobile.screens.demoform.activities.MainActivity;
 import java.util.List;
 
-public class NewAccountFragment extends AccountsFragment implements BaseListListener<Record> {
+public class NewAccountFragment extends AccountsFragment implements BaseListListener<Record>, CustomInteractorListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -20,6 +22,7 @@ public class NewAccountFragment extends AccountsFragment implements BaseListList
 		DDLListScreenlet ddlListScreenlet = (DDLListScreenlet) view.findViewById(R.id.type_of_account);
 		ddlListScreenlet.setUserId(0);
 		ddlListScreenlet.setListener(this);
+		ddlListScreenlet.setCustomInteractorListener(this);
 
 		return view;
 	}
@@ -47,5 +50,10 @@ public class NewAccountFragment extends AccountsFragment implements BaseListList
 	@Override
 	public String getName() {
 		return "Apply for a new account";
+	}
+
+	@Override
+	public Interactor createInteractor(String actionName) {
+		return new FilterByExistingAccountsInteractor();
 	}
 }
