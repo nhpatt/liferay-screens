@@ -28,7 +28,9 @@ public class Focusable {
 			focused = true;
 
 			DDLFormView ddlFormView = (DDLFormView) ddlFieldViewModel.getParentView();
-			ddlFormView.clearFocusOfFields(ddlFieldViewModel);
+			if (ddlFormView != null) {
+				ddlFormView.clearFocusOfFields(ddlFieldViewModel);
+			}
 			focusChange.onNext(EventType.FIELD_ENTER);
 		}
 	}
