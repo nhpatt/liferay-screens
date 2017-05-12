@@ -23,7 +23,9 @@ import com.liferay.mobile.screens.demoform.fragments.UserProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+	public static final String FRAGMENT_POSITION = "fragmentPosition";
 	private DrawerLayout drawerLayout;
+	private int fragmentPosition;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 		boolean added = getIntent().getBooleanExtra("added", false);
 		if (added) {
-			Snackbar.make(findViewById(android.R.id.content), R.string.request_sent, Snackbar.LENGTH_LONG)
-				.show();
+			Snackbar.make(findViewById(android.R.id.content), R.string.request_sent, Snackbar.LENGTH_LONG).show();
 		}
 
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	@Override
 	protected void onResume() {
 		super.onResume();
-		AccountsFragment fragment = getFragment(0);
+		AccountsFragment fragment = getFragment(this.fragmentPosition);
 		loadFragment(fragment);
 	}
 
@@ -93,13 +94,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	private void loadFragment(AccountsFragment fragment) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
-		fragmentManager.beginTransaction().replace(R.id.container, fragment)
-			//.addToBackStack("TAG")
-			.commit();
+		fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 	}
 
 	@NonNull
 	private AccountsFragment getFragment(int position) {
+
+		this.fragmentPosition = position;
+
 		if (position == 0) {
 			return new ListAccountsFragment();
 		} else if (position == 10) {
@@ -109,12 +111,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 	}
 
 	public void recordClicked(Record record) {
-		AccountFormFragment accountFormFragment = AccountFormFragment.newInstance(record);
-		loadFragment(accountFormFragment);
+		loadFragment(AccountFormFragment.newInstance(record));
 	}
 
 	public void accountClicked(Record record) {
-		ListMovementsFragment accountFormFragment = ListMovementsFragment.newInstance(record);
-		loadFragment(accountFormFragment);
+		loadFragment(ListMovementsFragment.newInstance(record));
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(FRAGMENT_POSITION, fragmentPosition);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+
+		fragmentPosition = savedInstanceState.getInt(FRAGMENT_POSITION);
 	}
 }
