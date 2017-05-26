@@ -24,14 +24,6 @@ android {
 		exclude 'META-INF/NOTICE'
 	}
 
-	productFlavors {
-		travisci {
-			minSdkVersion 21
-		}
-		vanilla {
-			minSdkVersion rootProject.ext.minSdkVersion
-		}
-	}
 	compileOptions {
 		targetCompatibility 1.8
 		sourceCompatibility 1.8
