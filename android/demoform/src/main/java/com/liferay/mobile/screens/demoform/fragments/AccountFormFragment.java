@@ -2,7 +2,6 @@ package com.liferay.mobile.screens.demoform.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -28,9 +27,9 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.liferay.mobile.screens.ddl.form.EventType.FORM_CANCEL;
 import static com.liferay.mobile.screens.ddl.form.EventType.FORM_LEAVE;
 
-public class AccountFormFragment extends AccountsFragment implements DDLFormListener {
+public class AccountFormFragment extends BaseNamedFragment implements DDLFormListener {
 
-	private Record record;
+	public static final int FRAGMENT_ID = 20;
 	private DDLFormScreenlet ddlFormScreenlet;
 
 	private Long timer = System.currentTimeMillis();
@@ -39,21 +38,22 @@ public class AccountFormFragment extends AccountsFragment implements DDLFormList
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		Record record = getArguments().getParcelable("record");
+
 		View view = inflater.inflate(R.layout.fragment_accounts_form, container, false);
 		ddlFormScreenlet = (DDLFormScreenlet) view.findViewById(R.id.form);
 		ddlFormScreenlet.setListener(this);
-		Long recordSetId = Long.valueOf((String) record.getServerValue("recordSetId"));
-		ddlFormScreenlet.setRecordSetId(recordSetId);
-		ddlFormScreenlet.load();
+
+		if (record.getPages().isEmpty()) {
+			Long recordSetId = Long.valueOf((String) record.getServerValue("recordSetId"));
+			ddlFormScreenlet.setRecordSetId(recordSetId);
+			ddlFormScreenlet.load();
+		} else {
+			ddlFormScreenlet.setRecord(record);
+		}
 
 		return view;
-	}
-
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		record = getArguments().getParcelable("record");
 	}
 
 	@Override

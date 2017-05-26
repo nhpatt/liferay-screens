@@ -3,6 +3,7 @@ package com.liferay.mobile.screens.demoform.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -14,7 +15,7 @@ import android.widget.AdapterView;
 import com.liferay.mobile.screens.ddl.model.Record;
 import com.liferay.mobile.screens.demoform.R;
 import com.liferay.mobile.screens.demoform.fragments.AccountFormFragment;
-import com.liferay.mobile.screens.demoform.fragments.AccountsFragment;
+import com.liferay.mobile.screens.demoform.fragments.BaseNamedFragment;
 import com.liferay.mobile.screens.demoform.fragments.ListAccountsFragment;
 import com.liferay.mobile.screens.demoform.fragments.ListMovementsFragment;
 import com.liferay.mobile.screens.demoform.fragments.MenuFragment;
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 	@Override
 	public void onBackPressed() {
-		AccountsFragment accountsFragment =
-			(AccountsFragment) getSupportFragmentManager().findFragmentById(R.id.container);
+		BaseNamedFragment accountsFragment =
+			(BaseNamedFragment) getSupportFragmentManager().findFragmentById(R.id.container);
 		if (accountsFragment instanceof AccountFormFragment) {
 			boolean back = ((AccountFormFragment) accountsFragment).onBackPressed();
 			if (!back) {
@@ -68,54 +69,55 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 		}
 
 		if (accountsFragment instanceof AccountFormFragment) {
-			loadFragment(getFragment(1));
+			loadFragment(BaseNamedFragment.FRAGMENT_ID);
 		} else if (accountsFragment instanceof ListAccountsFragment) {
 			super.onBackPressed();
 		} else {
-			loadFragment(getFragment(0));
+			loadFragment(ListAccountsFragment.FRAGMENT_ID);
 		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		AccountsFragment fragment = getFragment(this.fragmentPosition);
-		loadFragment(fragment);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		drawerLayout.closeDrawers();
 
-		AccountsFragment fragment = getFragment(position);
-		loadFragment(fragment);
+		loadFragment(position);
 	}
 
-	private void loadFragment(AccountsFragment fragment) {
+	private void loadFragment(int fragmentId, Record record) {
+		Fragment fragment = getFragment(fragmentId, record);
+
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
 		fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 	}
 
-	@NonNull
-	private AccountsFragment getFragment(int position) {
+	private void loadFragment(int fragmentId) {
+		loadFragment(fragmentId, null);
+	}
 
+	@NonNull
+	private BaseNamedFragment getFragment(int position, Record record) {
 		this.fragmentPosition = position;
 
-		if (position == 0) {
-			return new ListAccountsFragment();
-		} else if (position == 10) {
-			return new UserProfileFragment();
+		if (position == ListAccountsFragment.FRAGMENT_ID) {
+			return ListAccountsFragment.newInstance();
+		} else if (position == UserProfileFragment.FRAGMENT_ID) {
+			return UserProfileFragment.newInstance();
+		} else if (position == AccountFormFragment.FRAGMENT_ID) {
+			return AccountFormFragment.newInstance(record);
+		} else if (position == ListMovementsFragment.FRAGMENT_ID) {
+			return ListMovementsFragment.newInstance(record);
 		}
-		return new NewAccountFragment();
+		return NewAccountFragment.newInstance();
 	}
 
 	public void recordClicked(Record record) {
-		loadFragment(AccountFormFragment.newInstance(record));
+		loadFragment(AccountFormFragment.FRAGMENT_ID, record);
 	}
 
 	public void accountClicked(Record record) {
-		loadFragment(ListMovementsFragment.newInstance(record));
+		loadFragment(ListMovementsFragment.FRAGMENT_ID, record);
 	}
 
 	@Override

@@ -11,10 +11,13 @@ import com.liferay.mobile.screens.ddl.list.DDLListScreenlet;
 import com.liferay.mobile.screens.ddl.model.Record;
 import com.liferay.mobile.screens.demoform.R;
 import com.liferay.mobile.screens.demoform.activities.MainActivity;
+import com.liferay.mobile.screens.demoform.interactors.FilterByUserNameColumnInteractor;
 import java.util.List;
 
-public class ListMovementsFragment extends AccountsFragment
+public class ListMovementsFragment extends BaseNamedFragment
 	implements BaseListListener<Record>, CustomInteractorListener {
+
+	public static final int FRAGMENT_ID = 30;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

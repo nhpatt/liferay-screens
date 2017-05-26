@@ -11,9 +11,11 @@ import com.liferay.mobile.screens.ddl.list.DDLListScreenlet;
 import com.liferay.mobile.screens.ddl.model.Record;
 import com.liferay.mobile.screens.demoform.R;
 import com.liferay.mobile.screens.demoform.activities.MainActivity;
+import com.liferay.mobile.screens.demoform.interactors.FilterByExistingAccountsInteractor;
 import java.util.List;
 
-public class NewAccountFragment extends AccountsFragment implements BaseListListener<Record>, CustomInteractorListener {
+public class NewAccountFragment extends BaseNamedFragment
+	implements BaseListListener<Record>, CustomInteractorListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,5 +57,12 @@ public class NewAccountFragment extends AccountsFragment implements BaseListList
 	@Override
 	public Interactor createInteractor(String actionName) {
 		return new FilterByExistingAccountsInteractor();
+	}
+
+	public static NewAccountFragment newInstance() {
+		Bundle args = new Bundle();
+		NewAccountFragment fragment = new NewAccountFragment();
+		fragment.setArguments(args);
+		return fragment;
 	}
 }

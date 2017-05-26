@@ -17,9 +17,10 @@ import com.liferay.mobile.screens.demoform.R;
 import com.liferay.mobile.screens.demoform.activities.LoginActivity;
 import com.liferay.mobile.screens.userportrait.UserPortraitScreenlet;
 
-public class UserProfileFragment extends AccountsFragment
+public class UserProfileFragment extends BaseNamedFragment
 	implements AssetDisplayInnerScreenletListener, View.OnClickListener {
 
+	public static final int FRAGMENT_ID = 10;
 	private TextView userNameText;
 	private TextView jobTitleText;
 	private TextView emailText;
@@ -90,5 +91,12 @@ public class UserProfileFragment extends AccountsFragment
 	@Override
 	public String getName() {
 		return "Profile";
+	}
+
+	public static UserProfileFragment newInstance() {
+		Bundle args = new Bundle();
+		UserProfileFragment fragment = new UserProfileFragment();
+		fragment.setArguments(args);
+		return fragment;
 	}
 }
