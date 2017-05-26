@@ -1,4 +1,4 @@
-package com.liferay.mobile.screens.demoform.fragments;
+package com.liferay.mobile.screens.demoform.interactors;
 
 import com.liferay.mobile.screens.base.list.interactor.BaseListEvent;
 import com.liferay.mobile.screens.base.list.interactor.Query;
