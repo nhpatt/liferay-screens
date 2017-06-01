@@ -39,6 +39,9 @@ import com.liferay.mobile.screens.userportrait.interactor.upload.UserPortraitUpl
 import com.liferay.mobile.screens.userportrait.view.UserPortraitViewModel;
 import com.liferay.mobile.screens.util.LiferayLogger;
 
+import static com.liferay.mobile.screens.base.MediaStoreRequestShadowActivity.SELECT_IMAGE_FROM_GALLERY;
+import static com.liferay.mobile.screens.base.MediaStoreRequestShadowActivity.TAKE_PICTURE_WITH_CAMERA;
+
 /**
  * @author Javier Gamarra
  * @author Jose Manuel Navarro
@@ -84,14 +87,14 @@ public class UserPortraitScreenlet extends BaseScreenlet<UserPortraitViewModel, 
 	 * Selects a new user portrait from the device camera.
 	 */
 	public void openCamera() {
-		startShadowActivityForMediaStore(MediaStoreRequestShadowActivity.TAKE_PICTURE_WITH_CAMERA);
+		startShadowActivityForMediaStore(TAKE_PICTURE_WITH_CAMERA);
 	}
 
 	/**
 	 * Selects a new user portrait from the device image gallery.
 	 */
 	public void openGallery() {
-		startShadowActivityForMediaStore(MediaStoreRequestShadowActivity.SELECT_IMAGE_FROM_GALLERY);
+		startShadowActivityForMediaStore(SELECT_IMAGE_FROM_GALLERY);
 	}
 
 	@Override

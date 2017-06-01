@@ -46,6 +46,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.liferay.mobile.screens.base.MediaStoreRequestShadowActivity.*;
+
 /**
  * @author Víctor Galán Grande
  */
@@ -140,14 +142,14 @@ public class ImageGalleryScreenlet extends BaseListScreenlet<ImageEntry, ImageGa
 	 * Opens the device camera to upload a new photo.
 	 */
 	public void openCamera() {
-		startShadowActivityForMediaStore(MediaStoreRequestShadowActivity.TAKE_PICTURE_WITH_CAMERA);
+		startShadowActivityForMediaStore(TAKE_PICTURE_WITH_CAMERA);
 	}
 
 	/**
 	 * Opens the device image gallery to upload a new photo.
 	 */
 	public void openGallery() {
-		startShadowActivityForMediaStore(MediaStoreRequestShadowActivity.SELECT_IMAGE_FROM_GALLERY);
+		startShadowActivityForMediaStore(SELECT_IMAGE_FROM_GALLERY);
 	}
 
 	/**
@@ -339,7 +341,7 @@ public class ImageGalleryScreenlet extends BaseListScreenlet<ImageEntry, ImageGa
 		Activity activity = LiferayScreensContext.getActivityFromContext(getContext());
 
 		Intent intent = new Intent(activity, MediaStoreRequestShadowActivity.class);
-		intent.putExtra(MediaStoreRequestShadowActivity.MEDIA_STORE_TYPE, mediaStore);
+		intent.putExtra(MEDIA_STORE_TYPE, mediaStore);
 
 		activity.startActivity(intent);
 	}

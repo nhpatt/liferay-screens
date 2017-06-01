@@ -38,6 +38,9 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import java.io.File;
 import rx.functions.Action1;
 
+import static com.liferay.mobile.screens.base.MediaStoreRequestShadowActivity.TAKE_PICTURE_WITH_CAMERA;
+import static com.liferay.mobile.screens.base.MediaStoreRequestShadowActivity.TAKE_VIDEO_WITH_CAMERA;
+
 /**
  * @author Javier Gamarra
  */
@@ -132,17 +135,17 @@ public class DDLDocumentFieldView extends BaseDDLFieldTextView<DocumentField>
 
 		RxPermissions rxPermissions = new RxPermissions(activity);
 		RxView.clicks(takeVideoButton)
-			.compose(rxPermissions.ensure(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-			.subscribe(launchCamera(MediaStore.ACTION_VIDEO_CAPTURE));
+			.compose(rxPermissions.ensure(CAMERA, WRITE_EXTERNAL_STORAGE))
+			.subscribe(launchCamera(TAKE_VIDEO_WITH_CAMERA));
 
 		View takePhotoButton = customDialogView.findViewById(R.id.liferay_dialog_take_photo_form);
 		RxView.clicks(takePhotoButton)
-			.compose(rxPermissions.ensure(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-			.subscribe(launchCamera(MediaStore.ACTION_IMAGE_CAPTURE));
+			.compose(rxPermissions.ensure(CAMERA, WRITE_EXTERNAL_STORAGE))
+			.subscribe(launchCamera(TAKE_PICTURE_WITH_CAMERA));
 
 		final View selectFileButton = customDialogView.findViewById(R.id.liferay_dialog_select_file_form);
 		RxView.clicks(selectFileButton)
-			.compose(rxPermissions.ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+			.compose(rxPermissions.ensure(WRITE_EXTERNAL_STORAGE))
 			.subscribe(chooseFile(selectFileButton));
 
 		builder.setView(customDialogView);
