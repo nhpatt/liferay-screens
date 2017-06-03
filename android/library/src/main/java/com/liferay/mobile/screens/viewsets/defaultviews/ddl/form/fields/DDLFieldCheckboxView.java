@@ -96,7 +96,7 @@ public class DDLFieldCheckboxView extends LinearLayout
 
 	@Override
 	public void clearFocus(DDLFieldViewModel ddlFieldSelectView) {
-		clearFocus(ddlFieldSelectView);
+		clearFocus();
 	}
 
 	@Override
